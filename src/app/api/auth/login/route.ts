@@ -22,13 +22,15 @@ export const POST = RouteMiddleware<AuthResponse>(async (request: NextRequest) =
     if (error instanceof ApiError) {
       return NextResponse.json<ApiResponse<never>>({
         success: false,
-        message: error.message
+        message: error.message,
+        error: error
       }, { status: error.statusCode });
     }
     
     return NextResponse.json<ApiResponse<never>>({
       success: false,
-      message: 'Login failed'
+      message: 'Login failed',
+      error: error
     }, { status: 500 });
   }
 });
