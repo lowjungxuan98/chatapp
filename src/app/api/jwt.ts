@@ -15,11 +15,7 @@ const RESET_PASSWORD_EXPIRATION_MINUTES = parseInt(process.env.JWT_RESET_PASSWOR
 const VERIFY_EMAIL_EXPIRATION_MINUTES = parseInt(process.env.JWT_VERIFY_EMAIL_EXPIRATION_MINUTES ?? '10')
 
 const raw = process.env.JWT_SECRET
-if (!raw && process.env.NODE_ENV === 'production') {
-  throw new Error('Missing JWT_SECRET in production environment')
-}
 const secret = new TextEncoder().encode(raw)
-
 const prisma = new PrismaClient();
 
 const sign = async (user: User, expirationMinutes: number = ACCESS_EXPIRATION_MINUTES) => {
