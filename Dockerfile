@@ -23,9 +23,12 @@ RUN apk add --no-cache libc6-compat openssl && addgroup -S nodejs && adduser -S 
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
 RUN chown -R nextjs:nodejs /app
 USER nextjs
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy || npx prisma db push; node server.js"]
