@@ -11,7 +11,7 @@ export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
         const user = request.user;
         if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
         const token = await generateVerifyEmailToken(user);
-        await sendVerificationEmail(user.email, token);
+        await sendVerificationEmail(user.email, token, request.nextUrl.origin);
         return NextResponse.json<ApiResponse<string>>({
             success: true,
             message: 'Verification email sent',

@@ -7,7 +7,7 @@ import ApiError from '@/app/api/type';
 export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const resetToken = await forgotPassword(body.email);
+    const resetToken = await forgotPassword(body.email, request.nextUrl.origin);
     return NextResponse.json<ApiResponse<string>>({
       success: true,
       message: 'Password reset email sent successfully',

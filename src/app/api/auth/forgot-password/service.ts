@@ -6,10 +6,10 @@ import httpStatus from 'http-status';
 
 const prisma = new PrismaClient();
 
-export const forgotPassword = async (email: string): Promise<string> => {
+export const forgotPassword = async (email: string, host: string): Promise<string> => {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   const resetToken = await generateResetPasswordToken(email);
-  await sendResetPasswordEmail(email, resetToken);
+  await sendResetPasswordEmail(email, resetToken, host);
   return resetToken;
 };
