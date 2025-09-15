@@ -1,4 +1,4 @@
-import { ApiResponse, ApiError, RequestConfig } from './types';
+import { ApiResponse, ApiError, RequestConfig } from '../types';
 
 /**
  * Base API Manager class that handles HTTP requests and responses

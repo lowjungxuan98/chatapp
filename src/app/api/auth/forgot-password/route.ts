@@ -1,8 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { ApiResponse } from '@/app/api/type';
+import { ApiResponse, ApiError } from '@/lib/types';
 import { RouteMiddleware } from './middleware';
 import { forgotPassword } from './service';
-import ApiError from '@/app/api/type';
 
 export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
   try {

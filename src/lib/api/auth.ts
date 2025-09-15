@@ -2,14 +2,12 @@ import { BaseApiManager } from './base';
 import {
   ApiResponse,
   AuthResponse,
-} from './types';
-import { 
-  LoginFormData, 
-  RegisterFormData, 
-  ForgotPasswordFormData, 
-  ResetPasswordFormData,
-  SendVerificationEmailFormData 
-} from '../validations/auth';
+  LoginData,
+  RegisterData,
+  ForgotPasswordData,
+  ResetPasswordData,
+  SendVerificationEmailData,
+} from '../types';
 
 /**
  * Authentication API Manager
@@ -24,7 +22,7 @@ export class AuthApiManager extends BaseApiManager {
    * User login
    * POST /api/auth/login
    */
-  async login(credentials: LoginFormData): Promise<ApiResponse<AuthResponse>> {
+  async login(credentials: LoginData): Promise<ApiResponse<AuthResponse>> {
     return this.post<AuthResponse>('/auth/login', credentials);
   }
 
@@ -32,7 +30,7 @@ export class AuthApiManager extends BaseApiManager {
    * User registration
    * POST /api/auth/register
    */
-  async register(userData: RegisterFormData): Promise<ApiResponse<AuthResponse>> {
+  async register(userData: RegisterData): Promise<ApiResponse<AuthResponse>> {
     return this.post<AuthResponse>('/auth/register', userData);
   }
 
@@ -40,7 +38,7 @@ export class AuthApiManager extends BaseApiManager {
    * Forgot password - send reset email
    * POST /api/auth/forgot-password
    */
-  async forgotPassword(request: ForgotPasswordFormData): Promise<ApiResponse<string>> {
+  async forgotPassword(request: ForgotPasswordData): Promise<ApiResponse<string>> {
     return this.post<string>('/auth/forgot-password', request);
   }
 
@@ -49,7 +47,7 @@ export class AuthApiManager extends BaseApiManager {
    * POST /api/auth/reset-password?token={token}
    */
   async resetPassword(
-    resetData: ResetPasswordFormData,
+    resetData: ResetPasswordData,
     token: string
   ): Promise<ApiResponse<void>> {
     return this.post<void>('/auth/reset-password', resetData, { token });
@@ -68,7 +66,7 @@ export class AuthApiManager extends BaseApiManager {
    * POST /api/auth/send-verification-email
    */
   async sendVerificationEmail(
-    request: SendVerificationEmailFormData
+    request: SendVerificationEmailData
   ): Promise<ApiResponse<string>> {
     return this.post<string>('/auth/send-verification-email', request);
   }

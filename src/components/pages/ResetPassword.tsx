@@ -1,8 +1,7 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig } from '../../lib/types/form';
-import { resetPasswordSchema, ResetPasswordFormData } from '../../lib/validations/auth';
+import { FormConfig, resetPasswordSchema, ResetPasswordData } from '../../lib/types';
 
-const resetPasswordConfig: FormConfig<ResetPasswordFormData> = {
+const resetPasswordConfig: FormConfig<ResetPasswordData> = {
   fields: [
     {
       name: 'password',

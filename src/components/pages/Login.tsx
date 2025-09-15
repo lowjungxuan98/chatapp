@@ -1,8 +1,7 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig } from '../../lib/types/form';
-import { loginSchema, LoginFormData } from '../../lib/validations/auth';
+import { FormConfig, loginSchema, LoginData } from '../../lib/types';
 
-const loginConfig: FormConfig<LoginFormData> = {
+const loginConfig: FormConfig<LoginData> = {
   fields: [
     {
       name: 'email',

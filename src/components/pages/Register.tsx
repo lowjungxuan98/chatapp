@@ -1,8 +1,7 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig } from '../../lib/types/form';
-import { registerSchema, RegisterFormData } from '../../lib/validations/auth';
+import { FormConfig, registerSchema, RegisterData } from '../../lib/types';
 
-const registerConfig: FormConfig<RegisterFormData> = {
+const registerConfig: FormConfig<RegisterData> = {
   fields: [
     {
       name: 'name',

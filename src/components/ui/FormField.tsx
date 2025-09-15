@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormFieldConfig } from '../../lib/types/form';
+import { FormFieldConfig } from '@/lib/types';
 
 interface FormFieldProps {
   field: FormFieldConfig;

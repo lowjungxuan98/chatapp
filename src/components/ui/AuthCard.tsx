@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from './Form';
-import { FormConfig } from '@/lib/types/form';
+import { FormConfig } from '@/lib/types';
 
 interface AuthCardProps<T extends Record<string, unknown> = Record<string, unknown>> {
   title: string;

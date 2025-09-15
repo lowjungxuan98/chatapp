@@ -1,8 +1,7 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig } from '../../lib/types/form';
-import { forgotPasswordSchema, ForgotPasswordFormData } from '../../lib/validations/auth';
+import { FormConfig, forgotPasswordSchema, ForgotPasswordData } from '../../lib/types';
 
-const forgotPasswordConfig: FormConfig<ForgotPasswordFormData> = {
+const forgotPasswordConfig: FormConfig<ForgotPasswordData> = {
   fields: [
     {
       name: 'email',

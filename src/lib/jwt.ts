@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { TokenType, User, Token } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
-import ApiError, { AuthTokensResponse } from './type';
+import { ApiError, AuthTokensResponse } from '@/lib/types';
 import httpStatus from 'http-status';
 
 const ALG = 'HS256' as const

@@ -1,8 +1,8 @@
 import { PrismaClient, TokenType } from '@prisma/client';
-import { encrypt } from '@/app/api/crypto';
-import ApiError from '@/app/api/type';
+import { encrypt } from '@/lib/crypto';
+import { ApiError } from '@/lib/types';
 import httpStatus from 'http-status';
-import { verify } from '@/app/api/jwt';
+import { verify } from '@/lib/jwt';
 
 const prisma = new PrismaClient();
 

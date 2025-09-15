@@ -1,6 +1,6 @@
 import { PrismaClient, TokenType } from "@prisma/client";
-import { verify } from "@/app/api/jwt";
-import ApiError from "@/app/api/type";
+import { verify } from "@/lib/jwt";
+import { ApiError } from "@/lib/types";
 import httpStatus from "http-status";
 
 const prisma = new PrismaClient();

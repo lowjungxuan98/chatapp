@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { z } from 'zod';
-import { FormConfig, FormState, UseFormReturn } from '../types/form';
+import { FormConfig, FormState, UseFormReturn } from '../types';
 
 export function useForm<T extends Record<string, unknown>>(
   config: FormConfig<T>
