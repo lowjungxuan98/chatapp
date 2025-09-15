@@ -29,7 +29,7 @@ export function useForm<T extends Record<string, unknown>>(
         const fieldError = error.issues.find(issue => 
           issue.path.length > 0 && issue.path[0] === name
         );
-        return fieldError?.message || 'Invalid value';
+        return fieldError?.message || null;
       }
       return 'Validation error';
     }
