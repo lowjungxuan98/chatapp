@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { ApiResponse, Handler, RequestSchema } from "./type";
-import { verify } from "./jwt";
+import { ApiResponse, Handler, RequestSchema } from "@/types";
+import { verify } from "@/lib/jwt";
 import { TokenType } from "@prisma/client";
 
 export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(handler: Handler<T>): Handler<T> => async (req: NextRequest) => {

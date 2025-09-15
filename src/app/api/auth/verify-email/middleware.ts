@@ -1,6 +1,6 @@
 import { GlobalMiddleware } from "@/app/api/middleware";
-import { Handler } from "@/app/api/type";
-import { verifyEmailSchema } from "@/app/api/auth/verify-email/validate";
+import { Handler } from "@/types";
+import { verifyEmailApiSchema } from "@/types";
 
 export const RouteMiddleware = <T>(handler: Handler<T>) => 
-  GlobalMiddleware(verifyEmailSchema)<T>(handler);
+  GlobalMiddleware(verifyEmailApiSchema)<T>(handler);

@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { login } from './service';
 import { RouteMiddleware } from './middleware';
-import { ApiResponse } from '../../type';
-import { AuthResponse } from '../../type';
-import { generateAuthTokens } from '../../jwt';
-import ApiError from '../../type';
+import { ApiResponse, AuthResponse, ApiError } from '@/types';
+import { generateAuthTokens } from '@/lib/jwt';
 
 export const POST = RouteMiddleware<AuthResponse>(async (request: NextRequest) => {
   try {

@@ -1,6 +1,6 @@
 import { GlobalMiddleware } from '@/app/api/middleware';
-import { resetPasswordSchema } from '@/app/api/auth/reset-password/validate';
-import { Handler } from '@/app/api/type';
+import { resetPasswordApiSchema } from '@/types';
+import { Handler } from '@/types';
 
 export const RouteMiddleware = <T>(handler: Handler<T>) => 
-  GlobalMiddleware(resetPasswordSchema)<T>(handler);
+  GlobalMiddleware(resetPasswordApiSchema)<T>(handler);

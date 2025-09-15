@@ -25,9 +25,9 @@ const sendEmail = async (to: string, subject: string, text: string) => {
   await transport.sendMail(msg);
 };
 
-const sendResetPasswordEmail = async (to: string, token: string) => {
+const sendResetPasswordEmail = async (to: string, token: string, host: string) => {
   const subject = 'Reset Password - ChatApp';
-  const resetPasswordUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/reset-password?token=${token}`;
+  const resetPasswordUrl = `${host}/api/auth/reset-password?token=${token}`;
   const text = `Dear user,
 
 To reset your password, click on this link: ${resetPasswordUrl}
@@ -40,9 +40,9 @@ ChatApp Team`;
   await sendEmail(to, subject, text);
 };
 
-const sendVerificationEmail = async (to: string, token: string) => {
+const sendVerificationEmail = async (to: string, token: string, host: string) => {
   const subject = 'Email Verification - ChatApp';
-  const verificationEmailUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/verify-email?token=${token}`;
+  const verificationEmailUrl = `${host}/api/auth/verify-email?token=${token}`;
   const text = `Dear user,
 
 To verify your email, click on this link: ${verificationEmailUrl}

@@ -1,9 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { RouteMiddleware } from './middleware';
-import { ApiResponse } from '@/app/api/type';
-import ApiError from '@/app/api/type';
-import { generateVerifyEmailToken } from '@/app/api/jwt';
-import { sendVerificationEmail } from '@/app/api/email';
+import { ApiResponse, ApiError } from '@/types';
+import { generateVerifyEmailToken } from '@/lib/jwt';
+import { sendVerificationEmail } from '@/lib/email';
 import httpStatus from 'http-status';
 
 export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
@@ -11,7 +10,7 @@ export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
         const user = request.user;
         if (!user) throw new ApiError(httpStatus.UNAUTHORIZED, 'Unauthorized');
         const token = await generateVerifyEmailToken(user);
-        await sendVerificationEmail(user.email, token);
+        await sendVerificationEmail(user.email, token, request.nextUrl.origin);
         return NextResponse.json<ApiResponse<string>>({
             success: true,
             message: 'Verification email sent',

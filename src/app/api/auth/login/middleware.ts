@@ -1,6 +1,6 @@
 import { GlobalMiddleware } from "../../middleware";
-import { loginSchema } from "./validate";
-import { Handler } from "../../type";
+import { loginApiSchema } from "@/types";
+import { Handler } from "@/types";
 
 export const RouteMiddleware = <T>(handler: Handler<T>) => 
-  GlobalMiddleware(loginSchema)<T>(handler);
+  GlobalMiddleware(loginApiSchema)<T>(handler);
