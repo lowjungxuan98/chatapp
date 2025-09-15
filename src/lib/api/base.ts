@@ -1,4 +1,4 @@
-import { ApiResponse, ApiError, RequestConfig, HttpMethod } from './types';
+import { ApiResponse, ApiError, RequestConfig } from './types';
 
 /**
  * Base API Manager class that handles HTTP requests and responses
@@ -117,7 +117,7 @@ export class BaseApiManager {
    */
   protected async post<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     params?: Record<string, string>,
     headers?: Record<string, string>
   ): Promise<ApiResponse<T>> {
@@ -134,7 +134,7 @@ export class BaseApiManager {
    */
   protected async put<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     params?: Record<string, string>,
     headers?: Record<string, string>
   ): Promise<ApiResponse<T>> {
@@ -166,7 +166,7 @@ export class BaseApiManager {
    */
   protected async patch<T>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     params?: Record<string, string>,
     headers?: Record<string, string>
   ): Promise<ApiResponse<T>> {
