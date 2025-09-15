@@ -36,12 +36,19 @@ export default function Login() {
       subtitle="Welcome back! Please sign in to your account."
       config={loginConfig}
       footer={
-        <span>
-          Don&apos;t have an account?{' '}
-          <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-            Sign up
-          </a>
-        </span>
+        <div className="space-y-2">
+          <div className="text-center">
+            <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              Forgot your password?
+            </a>
+          </div>
+          <div className="text-center">
+            Don&apos;t have an account?{' '}
+            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
+              Sign up
+            </a>
+          </div>
+        </div>
       }
     />
   );

@@ -28,10 +28,10 @@ export function Form<T extends Record<string, unknown>>({
     >
       {config.fields.map((field) => {
         const currentValue = formState.data[field.name];
-        const typedValue = typeof currentValue === 'string' || typeof currentValue === 'number' || typeof currentValue === 'boolean' 
-          ? currentValue 
+        const typedValue = typeof currentValue === 'string' || typeof currentValue === 'number' || typeof currentValue === 'boolean'
+          ? currentValue
           : (field.type === 'checkbox' ? false : '');
-        
+
         return (
           <FormField
             key={field.name}
@@ -46,14 +46,16 @@ export function Form<T extends Record<string, unknown>>({
         );
       })}
 
-      <Button
-        type="submit"
-        loading={formState.isSubmitting}
-        disabled={config.disabled || formState.isSubmitting || !formState.isValid}
-        className={config.submitButtonClassName}
-      >
-        {config.submitButtonText || 'Submit'}
-      </Button>
+      <div className="flex justify-center">
+        <Button
+          type="submit"
+          loading={formState.isSubmitting}
+          disabled={config.disabled || formState.isSubmitting || !formState.isValid}
+          className={config.submitButtonClassName}
+        >
+          {config.submitButtonText || 'Submit'}
+        </Button>
+      </div>
     </form>
   );
 }
