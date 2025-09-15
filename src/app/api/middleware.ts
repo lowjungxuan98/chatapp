@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { ApiResponse, Handler, RequestSchema } from "@/lib/types";
+import { ApiResponse, Handler, RequestSchema } from "@/types";
 import { verify } from "@/lib/jwt";
 import { TokenType } from "@prisma/client";
 

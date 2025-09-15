@@ -7,7 +7,7 @@ import {
   ForgotPasswordData,
   ResetPasswordData,
   SendVerificationEmailData,
-} from '../types';
+} from '@/types';
 
 /**
  * Authentication API Manager

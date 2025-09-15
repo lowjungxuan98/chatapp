@@ -1,5 +1,5 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig, forgotPasswordSchema, ForgotPasswordData } from '../../lib/types';
+import { FormConfig, forgotPasswordSchema, ForgotPasswordData } from '@/types';
 
 const forgotPasswordConfig: FormConfig<ForgotPasswordData> = {
   fields: [

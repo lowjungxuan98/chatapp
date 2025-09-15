@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { generateResetPasswordToken } from '@/lib/jwt';
 import { sendResetPasswordEmail } from '@/lib/email';
-import { ApiError } from '@/lib/types';
+import { ApiError } from '@/types';
 import httpStatus from 'http-status';
 
 const prisma = new PrismaClient();

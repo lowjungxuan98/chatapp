@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { RouteMiddleware } from './middleware';
-import { ApiResponse, ApiError } from '@/lib/types';
+import { ApiResponse, ApiError } from '@/types';
 import { generateVerifyEmailToken } from '@/lib/jwt';
 import { sendVerificationEmail } from '@/lib/email';
 import httpStatus from 'http-status';

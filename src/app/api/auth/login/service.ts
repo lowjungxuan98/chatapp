@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { verify } from '@/lib/crypto';
-import { ApiError } from '@/lib/types';
+import { ApiError } from '@/types';
 import httpStatus from 'http-status';
 
 const prisma = new PrismaClient();

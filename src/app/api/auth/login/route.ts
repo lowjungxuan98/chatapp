@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { login } from './service';
 import { RouteMiddleware } from './middleware';
-import { ApiResponse, AuthResponse, ApiError } from '@/lib/types';
+import { ApiResponse, AuthResponse, ApiError } from '@/types';
 import { generateAuthTokens } from '@/lib/jwt';
 
 export const POST = RouteMiddleware<AuthResponse>(async (request: NextRequest) => {

@@ -1,6 +1,6 @@
 import { PrismaClient, TokenType } from '@prisma/client';
 import { encrypt } from '@/lib/crypto';
-import { ApiError } from '@/lib/types';
+import { ApiError } from '@/types';
 import httpStatus from 'http-status';
 import { verify } from '@/lib/jwt';
 

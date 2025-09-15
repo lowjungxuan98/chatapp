@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ApiResponse, ApiError } from '@/lib/types';
+import { ApiResponse, ApiError } from '@/types';
 import { RouteMiddleware } from '@/app/api/auth/reset-password/middleware';
 import { resetPassword } from '@/app/api/auth/reset-password/service';
 

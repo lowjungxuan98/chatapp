@@ -1,5 +1,5 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig, loginSchema, LoginData } from '../../lib/types';
+import { FormConfig, loginSchema, LoginData } from '@/types';
 
 const loginConfig: FormConfig<LoginData> = {
   fields: [

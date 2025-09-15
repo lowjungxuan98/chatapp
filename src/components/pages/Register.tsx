@@ -1,5 +1,5 @@
 import AuthCard from '../ui/AuthCard';
-import { FormConfig, registerSchema, RegisterData } from '../../lib/types';
+import { FormConfig, registerSchema, RegisterData } from '@/types';
 
 const registerConfig: FormConfig<RegisterData> = {
   fields: [
