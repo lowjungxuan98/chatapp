@@ -1,10 +1,7 @@
 import * as z from "zod";
+import { registerSchema as authRegisterSchema } from "@/lib/validations/auth";
 
-export const registerSchema = z.object({
+export const register = z.object({
   query: z.object({}),
-  body: z.object({
-    email: z.email(),
-    name: z.string().min(1).max(100),
-    password: z.string().min(8)
-  })
+  body: authRegisterSchema
 });

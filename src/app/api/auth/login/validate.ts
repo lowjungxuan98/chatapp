@@ -1,9 +1,7 @@
 import * as z from "zod";
+import { loginSchema } from "@/lib/validations/auth";
 
-export const loginSchema = z.object({
+export const login = z.object({
   query: z.object({}),
-  body: z.object({
-    email: z.email(),
-    password: z.string().min(1)
-  })
+  body: loginSchema
 });

@@ -1,10 +1,9 @@
 import { z } from 'zod';
+import { resetPasswordSchema as authResetPasswordSchema } from '@/lib/validations/auth';
 
-export const resetPasswordSchema = z.object({
+export const resetPassword = z.object({
   query: z.object({
     token: z.string().min(1, 'Token is required')
   }),
-  body: z.object({
-    password: z.string().min(6, 'Password must be at least 6 characters')
-  })
+  body: authResetPasswordSchema
 });

@@ -53,8 +53,14 @@ export const resetPasswordSchema = z
     path: ['confirmPassword'],
   });
 
+// Send verification email
+export const sendVerificationEmailSchema = z.object({
+  email: z.email({ message: 'Please enter a valid email address' }),
+});
+
 // Export types
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
+export type SendVerificationEmailFormData = z.infer<typeof sendVerificationEmailSchema>;

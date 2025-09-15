@@ -1,6 +1,6 @@
 import { GlobalMiddleware } from "../../middleware";
-import { registerSchema } from "./validate";
+import { register } from "./validate";
 import { Handler } from "../../type";
 
 export const RouteMiddleware = <T>(handler: Handler<T>) => 
-  GlobalMiddleware(registerSchema)<T>(handler);
+  GlobalMiddleware(register)<T>(handler);

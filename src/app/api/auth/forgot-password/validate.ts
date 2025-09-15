@@ -1,8 +1,7 @@
 import { z } from 'zod';
+import { forgotPasswordSchema as authForgotPasswordSchema } from '@/lib/validations/auth';
 
-export const forgotPasswordSchema = z.object({
+export const forgotPassword = z.object({
   query: z.object({}),
-  body: z.object({
-    email: z.string().email('Invalid email format')
-  })
+  body: authForgotPasswordSchema
 });
