@@ -26,7 +26,7 @@ export function useForm<T extends Record<string, unknown>>(
       return null;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const fieldError = error.issues.find(issue => 
+        const fieldError = error.issues.find(issue =>
           issue.path.length > 0 && issue.path[0] === name
         );
         return fieldError?.message || null;
@@ -56,7 +56,7 @@ export function useForm<T extends Record<string, unknown>>(
       const newData = { ...prev.data, [name]: value };
       const fieldError = validateField(name, value);
       const newErrors = { ...prev.errors };
-      
+
       if (fieldError) {
         newErrors[name] = fieldError;
       } else {
@@ -78,12 +78,12 @@ export function useForm<T extends Record<string, unknown>>(
   const handleBlur = useCallback((name: string) => {
     setFormState(prev => {
       const currentValue = prev.data[name];
-      const typedValue = typeof currentValue === 'string' || typeof currentValue === 'number' || typeof currentValue === 'boolean' 
-        ? currentValue 
+      const typedValue = typeof currentValue === 'string' || typeof currentValue === 'number' || typeof currentValue === 'boolean'
+        ? currentValue
         : '';
       const fieldError = validateField(name, typedValue);
       const newErrors = { ...prev.errors };
-      
+
       if (fieldError) {
         newErrors[name] = fieldError;
       } else {
@@ -100,7 +100,7 @@ export function useForm<T extends Record<string, unknown>>(
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (config.disabled || formState.isSubmitting) {
       return;
     }
@@ -110,7 +110,7 @@ export function useForm<T extends Record<string, unknown>>(
     try {
       const validatedData = config.schema.parse(formState.data);
       await config.onSubmit(validatedData);
-      
+
       if (config.resetOnSubmit) {
         setFormState({
           data: initialData,

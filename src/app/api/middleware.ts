@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ApiResponse, Handler, RequestSchema } from "@/types";
-import { verify } from "@/lib/jwt";
-import { TokenType } from "@prisma/client";
 
 export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(handler: Handler<T>): Handler<T> => async (req: NextRequest) => {
     const whitelistedPaths = [
@@ -49,13 +47,13 @@ export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(hand
     }
 
     try {
-        const token = authHeader.split(" ")[1];
-        const user = await verify(token, TokenType.ACCESS).then((res) => {
-            if (!res.user) throw new Error("Invalid or expired token");
-            return res.user;
-        });
+        // const token = authHeader.split(" ")[1];
+        // const user = await verify(token, TokenType.ACCESS).then((res) => {
+        //     if (!res.user) throw new Error("Invalid or expired token");
+        //     return res.user;
+        // });
 
-        req.user = user;
+        // req.user = user;
         return handler(req);
     } catch (error) {
         return NextResponse.json<ApiResponse<T>>(

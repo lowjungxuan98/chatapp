@@ -32,8 +32,13 @@ export class BaseApiManager {
    * Build URL with query parameters
    */
   private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    const url = new URL(`${this.baseUrl}${endpoint}`, window.location.origin);
-    
+    let baseOrigin: string;
+    if (typeof window !== 'undefined')
+      baseOrigin = window.location.origin;
+    else
+      baseOrigin = process.env.NEXTAUTH_URL || '';
+    const url = new URL(`${this.baseUrl}${endpoint}`, baseOrigin);
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, value);

@@ -1,35 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { resetPassword } from './service';
+import { RouteMiddleware } from './middleware';
 import { ApiResponse, ApiError } from '@/types';
-import { RouteMiddleware } from '@/app/api/auth/reset-password/middleware';
-import { resetPassword } from '@/app/api/auth/reset-password/service';
+import { User } from '@prisma/client';
 
-export const POST = RouteMiddleware<void>(async (request: NextRequest) => {
+export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
   try {
-    const token = request.nextUrl.searchParams.get('token');
     const body = await request.json();
+    const url = new URL(request.url);
+    const token = url.searchParams.get('token')?.split('.')[0];
     if (!token) {
-      return NextResponse.json<ApiResponse<void>>({
+      return NextResponse.json<ApiResponse<never>>({
         success: false,
-        message: 'Token is required'
+        message: 'Reset token is required',
+        error: new Error('Missing token parameter')
       }, { status: 400 });
     }
-    await resetPassword(token, body.password);
+
+    const result = await resetPassword(token, body.password);
     
-    return NextResponse.json<ApiResponse<void>>({
+    return NextResponse.json<ApiResponse<User>>({
       success: true,
-      message: 'Password reset successfully'
+      message: 'Password reset successful',
+      data: result
     }, { status: 200 });
   } catch (error) {
     if (error instanceof ApiError) {
-      return NextResponse.json<ApiResponse<void>>({
+      return NextResponse.json<ApiResponse<never>>({
         success: false,
-        message: error.message
+        message: error.message,
+        error: error
       }, { status: error.statusCode });
     }
     
-    return NextResponse.json<ApiResponse<void>>({
+    return NextResponse.json<ApiResponse<never>>({
       success: false,
-      message: 'Failed to reset password'
+      message: 'Password reset failed',
+      error: error
     }, { status: 500 });
   }
 });

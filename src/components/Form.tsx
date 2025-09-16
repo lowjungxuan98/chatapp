@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormConfig } from '@/types';
-import { useForm } from '@/lib/hooks/useForm';
+import { useForm } from '@/hooks/useForm';
 import { FormField } from './FormField';
 import { Button } from './Button';
 

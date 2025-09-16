@@ -1,4 +1,5 @@
-import AuthCard from '../ui/AuthCard';
+import { signIn } from "next-auth/react"
+import AuthCard from '@/components/AuthCard';
 import { FormConfig, loginSchema, LoginData } from '@/types';
 
 const loginConfig: FormConfig<LoginData> = {
@@ -22,7 +23,14 @@ const loginConfig: FormConfig<LoginData> = {
   ],
   schema: loginSchema,
   onSubmit: async (data) => {
-    console.log('Login data:', data);
+    const res = await signIn(
+      "credentials",
+      {
+        email: data.email,
+        password: data.password,
+        redirectTo: "/me"
+      }
+    )
   },
   submitButtonText: 'Sign In',
   resetOnSubmit: false,
@@ -30,7 +38,7 @@ const loginConfig: FormConfig<LoginData> = {
 
 export default function Login() {
   return (
-    <AuthCard 
+    <AuthCard
       title="Sign In"
       subtitle="Welcome back! Please sign in to your account."
       config={loginConfig}

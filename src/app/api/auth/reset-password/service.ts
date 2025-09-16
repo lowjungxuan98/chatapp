@@ -1,18 +1,36 @@
-import { PrismaClient, TokenType } from '@prisma/client';
-import { encrypt } from '@/lib/crypto';
+import { PrismaClient } from '@prisma/client';
 import { ApiError } from '@/types';
 import httpStatus from 'http-status';
-import { verify } from '@/lib/jwt';
+import { encrypt } from '@/lib/crypto';
 
 const prisma = new PrismaClient();
 
-const resetPassword = async (resetPasswordToken: string, password: string): Promise<void> => {
-  const { user, token } = await verify(resetPasswordToken, TokenType.RESET_PASSWORD);
-  if (!token) throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired reset token');
-  if (!user) throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  const encryptedPassword = await encrypt(password);
-  await prisma.user.update({ where: { id: user.id }, data: { password: encryptedPassword } });
-  await prisma.token.deleteMany({ where: { userId: user.id, type: TokenType.RESET_PASSWORD } });
-};
+export const resetPassword = async (token: string, newPassword: string) => {
+ 
+ const verificationToken = await prisma.verificationToken.findFirst({
+    where: { token: token },
+  });
 
-export { resetPassword };
+  if (!verificationToken) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired reset token');
+  }
+
+  const email = verificationToken.identifier;
+  const password = await encrypt(newPassword);
+  const [updatedUser] = await Promise.all([
+    prisma.user.update({
+      where: { email },
+      data: { password },
+    }),
+    prisma.verificationToken.delete({
+      where: {
+        identifier_token: {
+          identifier: email,
+          token: verificationToken.token,
+        },
+      },
+    }),
+  ]);
+
+  return updatedUser;
+};
