@@ -24,7 +24,7 @@ export const POST = RouteMiddleware<string>(async (request: NextRequest) => {
     return NextResponse.json<ApiResponse<string>>({
       success: false,
       message: 'Failed to process password reset request',
-      error: error
+      error: error instanceof Error ? new ApiError(500, error.message) : new ApiError(500, 'Unknown error')
     }, { status: 500 });
   }
 });

@@ -13,7 +13,7 @@ export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
       return NextResponse.json<ApiResponse<never>>({
         success: false,
         message: 'Reset token is required',
-        error: new Error('Missing token parameter')
+        error: new ApiError(400, 'Missing token parameter')
       }, { status: 400 });
     }
 
@@ -36,7 +36,7 @@ export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
     return NextResponse.json<ApiResponse<never>>({
       success: false,
       message: 'Password reset failed',
-      error: error
+      error: error instanceof Error ? new ApiError(500, error.message) : new ApiError(500, 'Unknown error')
     }, { status: 500 });
   }
 });

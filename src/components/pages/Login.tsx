@@ -1,42 +1,52 @@
-import { signIn } from "next-auth/react"
-import AuthCard from '@/components/AuthCard';
-import { FormConfig, loginSchema, LoginData } from '@/types';
+"use client";
 
-const loginConfig: FormConfig<LoginData> = {
-  fields: [
-    {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
-      placeholder: 'Enter your email',
-      required: true,
-      autoComplete: 'email',
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      placeholder: 'Enter your password',
-      required: true,
-      autoComplete: 'current-password',
-    },
-  ],
-  schema: loginSchema,
-  onSubmit: async (data) => {
-    const res = await signIn(
-      "credentials",
-      {
-        email: data.email,
-        password: data.password,
-        redirectTo: "/me"
-      }
-    )
-  },
-  submitButtonText: 'Sign In',
-  resetOnSubmit: false,
-};
+import { signIn } from "next-auth/react"
+import AuthCard from '@/components/my-ui/AuthCard';
+import { FormConfig, loginSchema, LoginData } from '@/types';
+import { useRouter } from "next/navigation";
+import { api } from "@/lib/api";
 
 export default function Login() {
+  const router = useRouter();
+
+  const loginConfig: FormConfig<LoginData> = {
+    fields: [
+      {
+        name: 'email',
+        label: 'Email Address',
+        type: 'email',
+        placeholder: 'Enter your email',
+        required: true,
+        autoComplete: 'email',
+      },
+      {
+        name: 'password',
+        label: 'Password',
+        type: 'password',
+        placeholder: 'Enter your password',
+        required: true,
+        autoComplete: 'current-password',
+      },
+    ],
+    schema: loginSchema,
+    onSubmit: async (data) => {
+      const res = await api.login({ email: data.email, password: data.password });
+      if (res.success) {
+        await signIn("credentials", {
+          id: res.data.id,
+          name: res.data.name,
+          image: res.data.image,
+          email: data.email,
+          redirect: false
+        }).then((res) => {
+          if (!res.error)
+            router.push("/");
+        })
+      }
+    },
+    submitButtonText: 'Sign In',
+    resetOnSubmit: false,
+  };
   return (
     <AuthCard
       title="Sign In"

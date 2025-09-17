@@ -48,15 +48,6 @@ export class AuthApiManager extends BaseApiManager {
   async resetPassword(token: string, data: ResetPasswordData): Promise<ApiResponse<User>> {
     return this.post<User>(`/auth/reset-password?token=${encodeURIComponent(token)}`, data);
   }
-
-  /**
-   * Logout (client-side token cleanup)
-   * This method clears the stored auth token
-   */
-  logout(): void {
-    this.removeAuthToken();
-    // Additional cleanup can be added here (localStorage, sessionStorage, etc.)
-  }
 }
 
 // Create and export a singleton instance

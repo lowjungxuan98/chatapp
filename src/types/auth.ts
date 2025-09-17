@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { User } from '@prisma/client';
 
 const passwordSchema = z
   .string()

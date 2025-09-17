@@ -2,7 +2,8 @@ import React from 'react';
 import { FormConfig } from '@/types';
 import { useForm } from '@/hooks/useForm';
 import { FormField } from './FormField';
-import { Button } from './Button';
+import { Button } from '@/components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 interface FormProps<T extends Record<string, unknown>> {
   config: FormConfig<T>;
@@ -23,7 +24,7 @@ export function Form<T extends Record<string, unknown>>({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`space-y-4 ${config.formClassName || ''} ${className}`.trim()}
+      className={`space-y-6 ${config.formClassName || ''} ${className}`.trim()}
       noValidate
     >
       {config.fields.map((field) => {
@@ -49,10 +50,10 @@ export function Form<T extends Record<string, unknown>>({
       <div className="flex justify-center">
         <Button
           type="submit"
-          loading={formState.isSubmitting}
           disabled={config.disabled || formState.isSubmitting || !formState.isValid}
           className={config.submitButtonClassName}
         >
+          {formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {config.submitButtonText || 'Submit'}
         </Button>
       </div>
@@ -64,4 +65,3 @@ export function Form<T extends Record<string, unknown>>({
 export function SimpleForm<T extends Record<string, unknown>>(props: FormProps<T>) {
   return <Form {...props} />;
 }
-

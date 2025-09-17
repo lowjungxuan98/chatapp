@@ -1,6 +1,7 @@
+"use client";
+
 import { useRouter } from 'next/navigation';
-import { signIn } from "next-auth/react";
-import AuthCard from '@/components/AuthCard';
+import AuthCard from '@/components/my-ui/AuthCard';
 import { api } from '@/lib/api';
 import { FormConfig, resetPasswordSchema, ResetPasswordData } from '@/types';
 

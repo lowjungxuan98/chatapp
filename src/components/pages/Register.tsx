@@ -1,4 +1,6 @@
-import AuthCard from '@/components/AuthCard';
+"use client";
+
+import AuthCard from '@/components/my-ui/AuthCard';
 import { api } from '@/lib/api';
 import { signIn } from "next-auth/react"
 import { FormConfig, registerSchema, RegisterData } from '@/types';
@@ -45,7 +47,7 @@ const registerConfig: FormConfig<RegisterData> = {
     if (res.success) {
       await signIn("nodemailer", {
         email: data.email,
-        redirectTo: "/me"
+        redirectTo: "/login"
       })
     }
   },

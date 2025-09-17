@@ -1,4 +1,6 @@
-import AuthCard from '@/components/AuthCard';
+"use client";
+
+import AuthCard from '@/components/my-ui/AuthCard';
 import { api } from '@/lib/api';
 import { FormConfig, forgotPasswordSchema, ForgotPasswordData } from '@/types';
 
@@ -17,7 +19,7 @@ const forgotPasswordConfig: FormConfig<ForgotPasswordData> = {
   schema: forgotPasswordSchema,
   onSubmit: async (data) => {
     try {
-      const res = await api.forgotPassword(data);
+      await api.forgotPassword(data);
     } catch (error) {
       console.error('Forgot password error:', error);
     }

@@ -1,8 +1,7 @@
-import NextAuth from "next-auth"
+import NextAuth, { User } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./prisma"
-import { api } from "../api"
 import EmailProvider from "next-auth/providers/nodemailer"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -11,16 +10,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login"
   },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: true,
   providers: [
     Credentials({
-      credentials: { email: { label: "Email" }, password: { label: "Password", type: "password" } },
+      credentials: {
+        id: { label: "ID", type: "text" },
+        name: { label: "Name", type: "text" },
+        email: { label: "Email", type: "email" },
+        image: { label: "Image", type: "text" },
+      },
       authorize: async (creds) => {
-        if (!creds?.email || !creds?.password) return null
-        const res = await api.login(JSON.parse(JSON.stringify({ email: creds.email, password: creds.password })));
-        if (!res.success) return null
-        return {
-          id: res.data?.id,
-        }
+        return creds as User;
       },
     }),
     EmailProvider({

@@ -1,6 +1,14 @@
 import React from 'react';
 import { Form } from './Form';
 import { FormConfig } from '@/types';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 
 interface AuthCardProps<T extends Record<string, unknown> = Record<string, unknown>> {
   title: string;
@@ -17,37 +25,36 @@ export function AuthCard<T extends Record<string, unknown> = Record<string, unkn
   footer,
   className = ''
 }: AuthCardProps<T>) {
+  // Ensure the submit button takes full width
   config.submitButtonClassName = 'w-full';
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className={`max-w-md w-full space-y-8 ${className}`}>
-        <div className="bg-white shadow-lg rounded-lg p-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
+      <div className={`max-w-md w-full ${className}`}>
+        <Card className="shadow-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold text-gray-900">
               {title}
-            </h2>
+            </CardTitle>
             {subtitle && (
-              <p className="text-sm text-gray-600">
+              <CardDescription className="text-sm text-gray-600">
                 {subtitle}
-              </p>
+              </CardDescription>
             )}
-          </div>
-
-          {/* Content */}
-          <div className="space-y-6">
+          </CardHeader>
+          
+          <CardContent>
             <Form config={config} />
-          </div>
-
-          {/* Footer */}
+          </CardContent>
+          
           {footer && (
-            <div className="mt-8 pt-6 border-t border-gray-200">
+            <CardFooter className="justify-center border-t pt-6">
               <div className="text-center text-sm text-gray-600">
                 {footer}
               </div>
-            </div>
+            </CardFooter>
           )}
-        </div>
+        </Card>
       </div>
     </div>
   );

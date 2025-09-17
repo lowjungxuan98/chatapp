@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback } from 'react';
 import { z } from 'zod';
 import { FormConfig, FormState, UseFormReturn } from '@/types';
