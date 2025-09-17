@@ -14,18 +14,10 @@ export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
       data: result
     }, { status: 200 });
   } catch (error) {
-    if (error instanceof ApiError) {
-      return NextResponse.json<ApiResponse<never>>({
-        success: false,
-        message: error.message,
-        error: error
-      }, { status: error.statusCode });
-    }
-    
     return NextResponse.json<ApiResponse<never>>({
       success: false,
       message: 'Login failed',
-      error: error instanceof Error ? new ApiError(500, error.message) : new ApiError(500, 'Unknown error')
+      error: error
     }, { status: 500 });
   }
 });

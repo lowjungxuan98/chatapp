@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { AuthNavSection } from './AuthNavSection';
 import { Badge } from '@/components/ui/badge';
 import pkg from '../../../package.json';
-import { Navbar01, NavLeading, NavTrailing } from '../ui/shadcn-io/navbar-01';
+import { Navbar01, NavLeading, NavTrailing } from '@/components/ui/shadcn-io/navbar-01';
 
 export function Navbar() {
   return (
