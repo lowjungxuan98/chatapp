@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { signUp } from "@/app/api/auth/register/service";
 import { RouteMiddleware } from './middleware';
-import { ApiResponse, ApiError } from '@/types';
+import { ApiResponse } from '@/types';
 import { User } from '@prisma/client';
 
 export const POST = RouteMiddleware<User>(async (request: NextRequest) => {

@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { ApiResponse, ApiError } from '@/types';
+import { ApiResponse } from '@/types';
 import { RouteMiddleware } from './middleware';
 import { forgotPassword } from './service';
 
