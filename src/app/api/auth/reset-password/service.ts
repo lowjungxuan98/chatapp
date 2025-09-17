@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import httpStatus from 'http-status';
 import { encrypt } from '@/lib/crypto';
 
 const prisma = new PrismaClient();
