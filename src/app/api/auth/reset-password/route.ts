@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { resetPassword } from './service';
 import { RouteMiddleware } from './middleware';
-import { ApiResponse, ApiError } from '@/types';
+import { ApiResponse } from '@/types';
 import { User } from '@prisma/client';
 
 export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
@@ -13,7 +13,7 @@ export const POST = RouteMiddleware<User>(async (request: NextRequest) => {
       return NextResponse.json<ApiResponse<never>>({
         success: false,
         message: 'Reset token is required',
-        error: new ApiError(400, 'Missing token parameter')
+        error: new Error('Missing token parameter')
       }, { status: 400 });
     }
 
