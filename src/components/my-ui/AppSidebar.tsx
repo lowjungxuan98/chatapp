@@ -7,7 +7,8 @@ import {
   MessageSquare, 
   Home,
   Monitor,
-  LogOut
+  LogOut,
+  Wifi
 } from 'lucide-react';
 import {
   Sidebar,
@@ -26,6 +27,7 @@ import pkg from '../../../package.json';
 const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: Home },
   { title: 'Remote Control', url: '/remote-control', icon: Monitor },
+  { title: 'Socket', url: '/socket', icon: Wifi },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

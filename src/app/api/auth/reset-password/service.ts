@@ -1,6 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { ApiError } from '@/types';
-import httpStatus from 'http-status';
 import { encrypt } from '@/lib/crypto';
 
 const prisma = new PrismaClient();
@@ -10,9 +8,9 @@ export const resetPassword = async (token: string, newPassword: string) => {
  const verificationToken = await prisma.verificationToken.findFirst({
     where: { token: token },
   });
-
+  
   if (!verificationToken) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid or expired reset token');
+    throw new Error('Invalid or expired reset token');
   }
 
   const email = verificationToken.identifier;
