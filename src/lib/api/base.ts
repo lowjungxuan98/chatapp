@@ -1,4 +1,5 @@
-import { ApiResponse, ApiError, RequestConfig } from '@/types';
+import { ApiResponse, RequestConfig } from '@/types';
+import { toast } from 'sonner';
 
 /**
  * Base API Manager class that handles HTTP requests and responses
@@ -15,36 +16,26 @@ export class BaseApiManager {
   }
 
   /**
-   * Set authorization token for authenticated requests
-   */
-  setAuthToken(token: string): void {
-    this.defaultHeaders['Authorization'] = `Bearer ${token}`;
-  }
-
-  /**
-   * Remove authorization token
-   */
-  removeAuthToken(): void {
-    delete this.defaultHeaders['Authorization'];
-  }
-
-  /**
    * Build URL with query parameters
    */
   private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    const url = new URL(`${this.baseUrl}${endpoint}`, window.location.origin);
-    
+    let baseOrigin: string;
+    if (typeof window !== 'undefined')
+      baseOrigin = window.location.origin;
+    else
+      baseOrigin = process.env.NEXTAUTH_URL || '';
+    const url = new URL(`${this.baseUrl}${endpoint}`, baseOrigin);
+
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, value);
       });
     }
-
     return url.toString();
   }
 
   /**
-   * Make HTTP request
+   * Make HTTP request (returns standardized response)
    */
   private async makeRequest<T>(
     endpoint: string,
@@ -53,47 +44,28 @@ export class BaseApiManager {
     try {
       const url = this.buildUrl(endpoint, config.params);
       const headers = { ...this.defaultHeaders, ...config.headers };
-
       const fetchConfig: RequestInit = {
         method: config.method,
         headers,
       };
-
       // Add body for POST, PUT, PATCH requests
       if (config.body && ['POST', 'PUT', 'PATCH'].includes(config.method)) {
         fetchConfig.body = JSON.stringify(config.body);
       }
-
       const response = await fetch(url, fetchConfig);
       const data: ApiResponse<T> = await response.json();
 
-      // Handle non-2xx responses
-      if (!response.ok) {
-        throw new ApiError(
-          response.status,
-          data.message || `HTTP ${response.status}: ${response.statusText}`
-        );
-      }
-
+      if (!data.success)
+        toast.error(data.message);
+      else 
+        toast.success(data.message);
       return data;
     } catch (error) {
-      // Re-throw ApiError instances
-      if (error instanceof ApiError) {
-        throw error;
-      }
-
-      // Handle network errors or other fetch errors
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        throw new ApiError(0, 'Network error: Please check your connection');
-      }
-
-      // Handle JSON parsing errors
-      if (error instanceof SyntaxError) {
-        throw new ApiError(500, 'Invalid response format from server');
-      }
-
-      // Generic error fallback
-      throw new ApiError(500, error instanceof Error ? error.message : 'Unknown error occurred');
+      return {
+        success: false,
+        message: 'API Manager Error',
+        error: error
+      };
     }
   }
 
@@ -177,4 +149,5 @@ export class BaseApiManager {
       headers,
     });
   }
+
 }

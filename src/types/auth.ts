@@ -1,7 +1,5 @@
 import { z } from 'zod';
-import { User } from '@prisma/client';
 
-// Reusable password schema
 const passwordSchema = z
   .string()
   .min(1, { message: 'Password is required' })
@@ -49,11 +47,6 @@ export const resetPasswordSchema = z
     path: ['confirmPassword'],
   });
 
-export const sendVerificationEmailSchema = z.object({
-  email: z.email({ message: 'Please enter a valid email address' }),
-});
-
-// API Validation Schemas (for backend routes)
 export const loginApiSchema = z.object({
   query: z.object({}),
   body: loginSchema,
@@ -71,42 +64,12 @@ export const forgotPasswordApiSchema = z.object({
 
 export const resetPasswordApiSchema = z.object({
   query: z.object({
-    token: z.string().min(1, 'Token is required'),
+    token: z.string(),
   }),
   body: resetPasswordSchema,
 });
 
-export const verifyEmailApiSchema = z.object({
-  query: z.object({
-    token: z.string().min(1, 'Token is required'),
-  }),
-  body: z.object({}),
-});
-
-export const sendVerificationEmailApiSchema = z.object({
-  query: z.object({}),
-  body: sendVerificationEmailSchema,
-});
-
-// Inferred Types
 export type LoginData = z.infer<typeof loginSchema>;
 export type RegisterData = z.infer<typeof registerSchema>;
 export type ForgotPasswordData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordData = z.infer<typeof resetPasswordSchema>;
-export type SendVerificationEmailData = z.infer<typeof sendVerificationEmailSchema>;
-
-// Response Types
-export interface TokenResponse {
-  token: string;
-  expires: Date;
-}
-
-export interface AuthTokensResponse {
-  access: TokenResponse;
-  refresh?: TokenResponse;
-}
-
-export interface AuthResponse {
-  user: User;
-  tokens: AuthTokensResponse;
-}

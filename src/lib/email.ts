@@ -27,7 +27,7 @@ const sendEmail = async (to: string, subject: string, text: string) => {
 
 const sendResetPasswordEmail = async (to: string, token: string, host: string) => {
   const subject = 'Reset Password - ChatApp';
-  const resetPasswordUrl = `${host}/api/auth/reset-password?token=${token}`;
+  const resetPasswordUrl = `${host}/${token}/reset-password`;
   const text = `Dear user,
 
 To reset your password, click on this link: ${resetPasswordUrl}
@@ -40,24 +40,8 @@ ChatApp Team`;
   await sendEmail(to, subject, text);
 };
 
-const sendVerificationEmail = async (to: string, token: string, host: string) => {
-  const subject = 'Email Verification - ChatApp';
-  const verificationEmailUrl = `${host}/api/auth/verify-email?token=${token}`;
-  const text = `Dear user,
-
-To verify your email, click on this link: ${verificationEmailUrl}
-
-If you did not create an account, then ignore this email.
-
-Best regards,
-ChatApp Team`;
-  
-  await sendEmail(to, subject, text);
-};
-
 export {
   transport,
   sendEmail,
   sendResetPasswordEmail,
-  sendVerificationEmail
 };

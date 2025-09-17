@@ -1,4 +1,4 @@
-import { GlobalMiddleware } from "../../middleware";
+import { GlobalMiddleware } from "@/app/api/middleware";
 import { registerApiSchema } from "@/types";
 import { Handler } from "@/types";
 

@@ -1,4 +1,8 @@
-import AuthCard from '../ui/AuthCard';
+"use client";
+
+import AuthCard from '@/components/my-ui/AuthCard';
+import { api } from '@/lib/api';
+import { signIn } from "next-auth/react"
 import { FormConfig, registerSchema, RegisterData } from '@/types';
 
 const registerConfig: FormConfig<RegisterData> = {
@@ -39,7 +43,13 @@ const registerConfig: FormConfig<RegisterData> = {
   ],
   schema: registerSchema,
   onSubmit: async (data) => {
-    console.log('Register data:', data);
+    const res = await api.register(data);
+    if (res.success) {
+      await signIn("nodemailer", {
+        email: data.email,
+        redirectTo: "/login"
+      })
+    }
   },
   submitButtonText: 'Create Account',
   resetOnSubmit: true,
@@ -47,7 +57,7 @@ const registerConfig: FormConfig<RegisterData> = {
 
 export default function Register() {
   return (
-    <AuthCard 
+    <AuthCard
       title="Create Account"
       subtitle="Join us today! Create your account to get started."
       config={registerConfig}

@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { ApiResponse, Handler, RequestSchema } from "@/types";
-import { verify } from "@/lib/jwt";
-import { TokenType } from "@prisma/client";
+import { ApiResponse, Handler, RequestSchema, ApiError } from "@/types";
 
 export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(handler: Handler<T>): Handler<T> => async (req: NextRequest) => {
     const whitelistedPaths = [
@@ -16,7 +14,7 @@ export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(hand
     const parsedQuery = schema.shape.query.safeParse(queryParams);
     if (!parsedQuery.success) {
         return NextResponse.json<ApiResponse<T>>(
-            { success: false, message: "Invalid request query", error: parsedQuery.error },
+            { success: false, message: "Invalid request query", error: new ApiError(400, "Invalid request query") },
             { status: 400 }
         );
     }
@@ -31,7 +29,7 @@ export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(hand
     const parsedBody = schema.shape.body.safeParse(body);
     if (!parsedBody.success) {
         return NextResponse.json<ApiResponse<T>>(
-            { success: false, message: "Invalid request body", error: parsedBody.error },
+            { success: false, message: "Invalid request body", error: new ApiError(400, "Invalid request body") },
             { status: 400 }
         );
     }
@@ -43,23 +41,23 @@ export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(hand
     const authHeader = req.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
         return NextResponse.json<ApiResponse<T>>(
-            { success: false, message: "Missing or invalid authorization header" },
+            { success: false, message: "Missing or invalid authorization header", error: new ApiError(401, "Missing or invalid authorization header") },
             { status: 401 }
         );
     }
 
     try {
-        const token = authHeader.split(" ")[1];
-        const user = await verify(token, TokenType.ACCESS).then((res) => {
-            if (!res.user) throw new Error("Invalid or expired token");
-            return res.user;
-        });
+        // const token = authHeader.split(" ")[1];
+        // const user = await verify(token, TokenType.ACCESS).then((res) => {
+        //     if (!res.user) throw new Error("Invalid or expired token");
+        //     return res.user;
+        // });
 
-        req.user = user;
+        // req.user = user;
         return handler(req);
     } catch (error) {
         return NextResponse.json<ApiResponse<T>>(
-            { success: false, message: "Invalid or expired token", error },
+            { success: false, message: "Invalid or expired token", error: error instanceof Error ? new ApiError(401, error.message) : new ApiError(401, "Invalid or expired token") },
             { status: 401 }
         );
     }
