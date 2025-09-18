@@ -55,7 +55,7 @@ export function useSocket(serverUrl: string = 'http://localhost:3000') {
     }
   };
 
-  const emit = (event: string, data?: any) => {
+  const emit = (event: string, data?: unknown) => {
     socketRef.current?.emit(event, data);
   };
 
