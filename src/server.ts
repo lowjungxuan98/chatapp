@@ -21,7 +21,7 @@ app.prepare().then(async () => {
     path: "/socket.io",
     cors: {
       // 生产环境请改成你的前端域名，并按需设置 credentials
-      origin: dev ? ["*","https://admin.socket.io"] : ["https://your-web.app","https://admin.socket.io"],
+      origin: ["*"],
       credentials: true,
     },
     // 本地用 Postman 验证时可只开 websocket；生产可用默认 ["polling","websocket"]
