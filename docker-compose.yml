@@ -16,8 +16,21 @@ services:
       - chatapp-network
     restart: unless-stopped
 
+  redis:
+    image: redis:alpine
+    container_name: chatapp-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - chatapp-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+  redis_data:
 
 networks:
   chatapp-network:

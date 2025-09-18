@@ -1,76 +1,47 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
-export interface SocketMessage {
-  content: string;
-  sender: 'user' | 'server';
-  timestamp: Date;
-}
+const isBrowser = typeof window !== "undefined";
+const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL; // e.g. https://io.example.com
 
-export function useSocket(serverUrl: string = 'http://localhost:3000') {
+export function useSocket() {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [messages, setMessages] = useState<SocketMessage[]>([]);
   const socketRef = useRef<Socket | null>(null);
 
-  const addMessage = (content: string, sender: 'user' | 'server') => {
-    setMessages(prev => [...prev, { content, sender, timestamp: new Date() }]);
-  };
-
-  const connect = () => {
-    if (socketRef.current?.connected) return;
-    
-    const newSocket = io(serverUrl);
-    socketRef.current = newSocket;
-    setSocket(newSocket);
-
-    newSocket.on('connect', () => {
-      setIsConnected(true);
-      addMessage('Connected', 'server');
-    });
-
-    newSocket.on('disconnect', () => {
-      setIsConnected(false);
-      addMessage('Disconnected', 'server');
-    });
-
-    newSocket.on('message', (data) => {
-      addMessage(data, 'server');
-    });
-  };
-
-  const disconnect = () => {
-    socketRef.current?.disconnect();
-    socketRef.current = null;
-    setSocket(null);
-    setIsConnected(false);
-  };
-
-  const sendMessage = (content: string) => {
-    if (socketRef.current?.connected) {
-      socketRef.current.emit('message', content);
-      addMessage(content, 'user');
-    }
-  };
-
-  const emit = (event: string, data?: unknown) => {
-    socketRef.current?.emit(event, data);
-  };
-
   useEffect(() => {
-    connect();
-    return () => disconnect();
-  }, [serverUrl]);
+    if (!isBrowser) return;
 
-  return {
-    socket,
-    isConnected,
-    messages,
-    connect,
-    disconnect,
-    sendMessage,
-    emit,
-  };
+    const url = SOCKET_URL ?? window.location.origin;
+    const s = io(url, {
+      path: "/socket.io",          // 与 server 保持一致
+      // 调试 Postman / 仅 WebSocket 场景可打开：
+      // transports: ["websocket"],
+      // 如果反代用 cookie 粘性，需要：
+      // withCredentials: true,
+    });
+
+    socketRef.current = s;
+    setSocket(s);
+
+    s.on("connect", () => setIsConnected(true));
+    s.on("disconnect", () => setIsConnected(false));
+    s.on("response", (msg: string) => console.log("Client", "response", msg));
+    s.on("connect_error", (e) => console.warn("connect_error", e.message));
+
+    return () => {
+      s.removeAllListeners();
+      s.disconnect();
+      socketRef.current = null;
+      setSocket(null);
+      setIsConnected(false);
+    };
+  }, []);
+
+  const sendMessage = (content: string) => socketRef.current?.emit("message", content);
+  const emit = (event: string, data?: unknown) => socketRef.current?.emit(event, data);
+
+  return { socket, isConnected, sendMessage, emit };
 }

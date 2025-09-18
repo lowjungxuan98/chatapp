@@ -8,8 +8,8 @@ import { useSocket } from "@/hooks/useSocket";
 
 export default function Socket() {
   const [message, setMessage] = useState("");
-  
-  const { isConnected, messages, sendMessage } = useSocket();
+
+  const { isConnected, sendMessage } = useSocket();
 
   const handleSend = () => {
     if (message.trim()) {
@@ -27,28 +27,16 @@ export default function Socket() {
         </Badge>
       </div>
 
-      <div className="flex gap-2">
-        <Input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type message..."
-          onKeyPress={(e) => e.key === "Enter" && handleSend()}
-          disabled={!isConnected}
-        />
-        <Button onClick={handleSend} disabled={!isConnected || !message.trim()}>
-          Send
-        </Button>
-      </div>
-
-      <div className="border rounded p-4 h-64 overflow-y-auto">
-        {messages.map((msg) => (
-          <div key={msg.timestamp.toString()} className="mb-2">
-            <span className={msg.sender === 'user' ? 'text-blue-600' : 'text-gray-600'}>
-              {msg.sender}: {msg.content}
-            </span>
-          </div>
-        ))}
-      </div>
+      <Input
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type message..."
+        onKeyPress={(e) => e.key === "Enter" && handleSend()}
+        disabled={!isConnected}
+      />
+      <Button onClick={handleSend} disabled={!isConnected || !message.trim()}>
+        Send
+      </Button>
     </div>
   );
 }
