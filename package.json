@@ -80,6 +80,7 @@
     "@types/node": "^24.5.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.25.10",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
     "shadcn": "^3.3.1",

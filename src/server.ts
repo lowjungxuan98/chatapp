@@ -7,8 +7,6 @@ import { createAdapter } from "@socket.io/redis-adapter";
 import { instrument } from "@socket.io/admin-ui";
 
 const dev = process.env.NODE_ENV !== "production";
-// ⚠️ 容器/云上不要写死 localhost；或者直接不传 hostname
-// const hostname = process.env.HOST || "0.0.0.0";
 const port = Number(process.env.PORT) || 3000;
 
 const app = next({ dev /*, hostname, port*/ });
@@ -20,7 +18,6 @@ app.prepare().then(async () => {
   const io = new Server(httpServer, {
     path: "/socket.io",
     cors: {
-      // 生产环境请改成你的前端域名，并按需设置 credentials
       origin: ["*"],
       credentials: true,
     },
@@ -29,7 +26,6 @@ app.prepare().then(async () => {
     connectionStateRecovery: {},   // 启用状态恢复（v4.6+）
   });
 
-  // ===== 多副本：接入 Redis 适配器 =====
   if (process.env.REDIS_URL) {
     const pub = createClient({ url: process.env.REDIS_URL });
     const sub = pub.duplicate();
@@ -37,7 +33,6 @@ app.prepare().then(async () => {
     io.adapter(createAdapter(pub, sub));
   }
 
-  // （可选）Admin UI，浏览器打开 https://admin.socket.io 即可连
   instrument(io, { auth: false });
 
   io.engine.on("connection_error", (err: Error & { code?: string }) => {
