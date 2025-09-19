@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { AuthNavSection } from './AuthNavSection';
-import { Badge } from '@/components/ui/badge';
-import pkg from '../../../package.json';
-import { Navbar01, NavLeading, NavTrailing } from '@/components/ui/shadcn-io/navbar-01';
+import Link from "next/link";
+import Image from "next/image";
+import { AuthNavSection } from "./AuthNavSection";
+import { Badge } from "@/components/ui/badge";
+import pkg from "../../../package.json";
+import {
+  Navbar01,
+  NavLeading,
+  NavTrailing,
+} from "@/components/ui/shadcn-io/navbar-01";
+import { ModeToggle } from "./ModeToggle";
 
 export function Navbar() {
   return (
@@ -20,7 +25,10 @@ export function Navbar() {
             className="rounded-md"
           />
           <span className="font-bold">{pkg.name}</span>
-          <Badge variant="secondary" className="hidden sm:inline-flex text-xs ml-2">
+          <Badge
+            variant="secondary"
+            className="hidden sm:inline-flex text-xs ml-2"
+          >
             v{pkg.version}
           </Badge>
         </Link>
@@ -46,6 +54,7 @@ export function Navbar() {
       </NavMain> */}
 
       <NavTrailing>
+        <ModeToggle />
         <AuthNavSection />
       </NavTrailing>
     </Navbar01>

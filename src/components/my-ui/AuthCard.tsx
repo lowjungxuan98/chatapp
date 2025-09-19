@@ -29,15 +29,15 @@ export function AuthCard<T extends Record<string, unknown> = Record<string, unkn
   config.submitButtonClassName = 'w-full';
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className={`max-w-md w-full ${className}`}>
         <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold text-gray-900">
+            <CardTitle className="text-3xl font-bold text-gray-900 dark:text-gray-100">
               {title}
             </CardTitle>
             {subtitle && (
-              <CardDescription className="text-sm text-gray-600">
+              <CardDescription className="text-sm text-gray-600 dark:text-gray-400">
                 {subtitle}
               </CardDescription>
             )}
@@ -49,7 +49,7 @@ export function AuthCard<T extends Record<string, unknown> = Record<string, unkn
           
           {footer && (
             <CardFooter className="justify-center border-t pt-6">
-              <div className="text-center text-sm text-gray-600">
+              <div className="text-center text-sm text-gray-600 dark:text-gray-400">
                 {footer}
               </div>
             </CardFooter>

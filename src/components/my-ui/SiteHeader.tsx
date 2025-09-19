@@ -25,6 +25,7 @@ import {
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
+import { ModeToggle } from './ModeToggle';
 
 
 // Helper function to generate breadcrumbs
@@ -89,6 +90,8 @@ export function SiteHeader() {
         <Button variant="ghost" size="icon" className="md:hidden">
           <Search className="size-4" />
         </Button>
+
+        <ModeToggle />
 
         {/* Notifications */}
         <Button variant="ghost" size="icon">

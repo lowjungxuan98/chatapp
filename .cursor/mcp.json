@@ -1,61 +1,17 @@
 {
   "mcpServers": {
     "shadcn": {
-      "url": "https://www.shadcn.io/api/mcp",
       "command": "npx",
       "args": [
         "shadcn@latest",
         "mcp"
       ]
     },
-    "redis": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@redis/mcp-redis",
-        "serve"
-      ],
-      "env": {
-        "REDIS_URL": "redis://localhost:6379"
-      }
+    "docs-nextjs": {
+      "url": "https://gitmcp.io/vercel/next.js"
     },
-    "prisma-postgres": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@prisma/mcp",
-        "local"
-      ],
-      "env": {
-        "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/chatapp?schema=public"
-      }
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem"
-      ],
-      "env": {
-        "ROOT": "."
-      }
-    },
-    "git": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-git"
-      ]
-    },
-    // "firecrawl": {
-    //   "command": "npx",
-    //   "args": [
-    //     "-y",
-    //     "mcp-firecrawl"
-    //   ],
-    //   "env": {
-    //     "FIRECRAWL_API_KEY": "your_key_here"
-    //   }
-    // }
+    "docs-tailwindcss": {
+      "url": "https://gitmcp.io/tailwindlabs/tailwindcss"
+    }
   }
 }
