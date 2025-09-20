@@ -4,3 +4,4 @@ export { default as ForgotPassword } from './ForgotPassword';
 export { default as ResetPassword } from './ResetPassword';
 export { default as Dashboard } from './Dashboard';
 export { default as RemoteControl } from './RemoteControl';
+export { default as Chat } from './Chat';

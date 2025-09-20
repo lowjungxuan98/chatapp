@@ -28,6 +28,25 @@ services:
       - chatapp-network
     restart: unless-stopped
 
+  chatapp:
+    build: .
+    container_name: chatapp-app
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/chatapp?connect_timeout=15
+      - POSTGRES_URL_NON_POOLING=postgresql://postgres:postgres@postgres:5432/chatapp
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - chatapp-network
+    restart: unless-stopped
+
 volumes:
   postgres_data:
   redis_data:

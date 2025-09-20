@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "tsx src/server.ts",
-    "build": "next build --turbopack",
-    "start": "NODE_ENV=production tsx .next/standalone/server.js",
+    "build": "npx esbuild ./src/server.ts --bundle --platform=node --target=node20 --format=cjs --external:next --tsconfig=tsconfig.json --outfile=server.cjs && next build --turbopack",
+    "start": "NODE_ENV=production node server.cjs",
     "lint": "eslint",
     "db:init": "prisma generate && prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -63,7 +63,6 @@
     "react-day-picker": "^9.10.0",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.62.0",
-    "react-icons": "^5.5.0",
     "react-resizable-panels": "^3.0.6",
     "recharts": "^2.15.4",
     "redis": "^5.8.2",
