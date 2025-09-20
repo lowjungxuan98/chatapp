@@ -159,7 +159,7 @@ function logFactory({
 }
 
 export const logger = logFactory({ 
-  toStdout: process.env.NODE_ENV !== 'production' 
+  toStdout: true
 });
 
 export { logFactory };

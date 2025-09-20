@@ -9,7 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HiRectangleStack, HiArrowRightOnRectangle } from 'react-icons/hi2';
+import { LayoutDashboard, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export function AuthNavSection() {
@@ -50,14 +50,14 @@ export function AuthNavSection() {
                     <DropdownMenuItem
                         onClick={() => router.push('/dashboard')}
                     >
-                        <HiRectangleStack />
+                        <LayoutDashboard className="w-4 h-4" />
                         Dashboard
                     </DropdownMenuItem>
                     <DropdownMenuItem
                         onClick={() => signOut({ callbackUrl: '/login' })}
                         className="flex items-center cursor-pointer"
                     >
-                        <HiArrowRightOnRectangle />
+                        <LogOut className="w-4 h-4" />
                         Sign Out
                     </DropdownMenuItem>
                 </DropdownMenuContent>

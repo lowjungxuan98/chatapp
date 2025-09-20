@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import next from "next";
-import { createIOServer } from "./socket";
-import { logger } from "./lib/logger";
+import { createIOServer } from "@/socket";
+import { logger } from "@/lib/logger";
 
 const app = next({ dev: process.env.NODE_ENV !== "production" });
 const handler = app.getRequestHandler();

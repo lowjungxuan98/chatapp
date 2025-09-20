@@ -28,6 +28,7 @@ const navItems = [
   { title: 'Dashboard', url: '/dashboard', icon: Home },
   { title: 'Remote Control', url: '/remote-control', icon: Monitor },
   { title: 'Socket', url: '/socket', icon: Wifi },
+  { title: 'Chat', url: '/chat', icon: MessageSquare },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
