@@ -3,7 +3,7 @@ import { createAdapter } from "@socket.io/redis-adapter";
 import { createClient } from "redis";
 import { logger } from "@/lib/logger";
 
-export async function setupRedisAdapter(io: Server) {
+export async function adapter(io: Server) {
   const redisUrl = process.env.REDIS_URL;
   
   if (!redisUrl) {
@@ -21,7 +21,6 @@ export async function setupRedisAdapter(io: Server) {
     
     logger.info("Redis adapter configured successfully");
     
-    // Handle Redis connection errors
     pub.on("error", (err) => {
       logger.error("Redis pub client error", err);
     });
