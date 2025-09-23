@@ -8,9 +8,9 @@ export function middleware(io: Server<ClientToServer, ServerToClient, InterServe
     io.to = function (room: string) {
         const roomEmitter = originalTo.call(this, room);
         const originalEmit = roomEmitter.emit;
-        roomEmitter.emit = function (event: any, ...args: any[]) {
+        roomEmitter.emit = function (event: string, ...args: unknown[]) {
             logger.info("📡 Server → Room", { event, room, args: args.length ? args : "no data" });
-            return (originalEmit as any).call(this, event, ...args);
+            return (originalEmit as (event: string, ...args: unknown[]) => boolean).call(this, event, ...args);
         };
         return roomEmitter;
     };
@@ -41,9 +41,9 @@ export function middleware(io: Server<ClientToServer, ServerToClient, InterServe
         });
 
         const originalEmit = socket.emit;
-        socket.emit = function (event: any, ...args: any[]) {
+        socket.emit = function (event: unknown, ...args: unknown[]) {
             logger.info("📤 Server → Client", { event, args: args.length ? args : "no data", socketId: socket.id });
-            return (originalEmit as any).call(this, event, ...args);
+            return (originalEmit as (event: unknown, ...args: unknown[]) => boolean).call(this, event, ...args);
         };
 
         next();

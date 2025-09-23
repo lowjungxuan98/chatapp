@@ -1,4 +1,3 @@
-import { logger } from "@/lib/logger";
 import { joinRemote, remote, tap } from "@/socket/server/events";
 import { Socket, Server } from "socket.io";
 
@@ -9,7 +8,7 @@ export const connection = (socket: Socket, io: Server) => {
     socket.data.userId = auth.userId;
   }
 
-  socket.on("remote", async () => await remote(socket, io));
-  socket.on("joinRemote", async (data) => await joinRemote(socket, io, data));
+  socket.on("remote", async () => await remote(socket));
+  socket.on("joinRemote", async (data) => await joinRemote(socket, data));
   socket.on("tap", async (data) => await tap(socket, io, data));
 };

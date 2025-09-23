@@ -47,7 +47,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
         setSocket(null);
       };
     }
-  }, [status, session?.user?.id]);
+  }, [status, session?.user]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

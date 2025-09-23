@@ -1,10 +1,9 @@
 import { instrument } from "@socket.io/admin-ui";
 import {  adapter } from "@/socket/server/adapter";
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import type { Server as HTTPServer } from "node:http";
 import type { ClientToServer, ServerToClient, InterServer, SocketData } from "@/types";
 import { connection, disconnect } from "@/socket/server/events/connection";
-import { logger } from "@/lib/logger";
 import { middleware } from "@/socket/server/middleware";
 
 export async function server(server: HTTPServer) {
