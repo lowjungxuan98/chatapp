@@ -49,19 +49,20 @@ RUN npx esbuild ./src/server.ts --bundle --platform=node --target=node20 --forma
 ############################
 # Final runtime image (minimal)
 ############################
-FROM node:alpine AS runner
+FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
 RUN addgroup -S nextjs && adduser -S nextjs -G nextjs
 RUN apk add --no-cache libc6-compat
 RUN npm install pm2 -g
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/next.config.ts ./next.config.ts
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=prod-deps /app/package.json ./package.json
 COPY --from=prod-deps /app/prisma ./prisma
 COPY --from=prod-deps /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=prod-deps /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
 COPY --from=server-bundle /app/server.cjs ./server.cjs
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN chmod +x /app/docker-entrypoint.sh
