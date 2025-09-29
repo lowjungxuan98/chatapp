@@ -1,2 +1,2 @@
-export { client, type IOSocket } from "./config";
-export { SocketProvider, useSocket } from "./provider";
+export { client, defaultSocketUrl, defaultSocketOptions } from '@/socket/client/config';
+export { SocketProvider, useSocket } from '@/socket/client/provider';

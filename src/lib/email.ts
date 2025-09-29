@@ -26,7 +26,7 @@ const sendEmail = async (to: string, subject: string, text: string) => {
 };
 
 const sendResetPasswordEmail = async (to: string, token: string, host: string) => {
-  const subject = 'Reset Password - ChatApp';
+  const subject = 'Reset Password - Chat App';
   const resetPasswordUrl = `${host}/${token}/reset-password`;
   const text = `Dear user,
 
@@ -35,7 +35,7 @@ To reset your password, click on this link: ${resetPasswordUrl}
 If you did not request any password resets, then ignore this email.
 
 Best regards,
-ChatApp Team`;
+Chat App Team`;
   
   await sendEmail(to, subject, text);
 };

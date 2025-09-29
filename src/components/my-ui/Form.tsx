@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormConfig } from '@/types';
 import { useForm } from '@/hooks/useForm';
-import { FormField } from './FormField';
+import { FormField } from '@/components/my-ui/FormField';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 

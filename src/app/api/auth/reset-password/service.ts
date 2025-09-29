@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/config/prisma';
 import { encrypt } from '@/lib/crypto';
-
-const prisma = new PrismaClient();
 
 export const resetPassword = async (token: string, newPassword: string) => {
  

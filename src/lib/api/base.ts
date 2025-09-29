@@ -55,10 +55,10 @@ export class BaseApiManager {
       const response = await fetch(url, fetchConfig);
       const data: ApiResponse<T> = await response.json();
 
-      if (!data.success)
-        toast.error(data.message);
-      else 
-        toast.success(data.message);
+      // if (!data.success)
+      //   toast.error(data.message);
+      // else 
+      //   toast.success(data.message);
       return data;
     } catch (error) {
       return {

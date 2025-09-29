@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/config/prisma';
 import { sendResetPasswordEmail } from '@/lib/email';
 import { createHash, randomBytes } from "crypto";
-
-const prisma = new PrismaClient();
 
 export const forgotPassword = async (email: string, host: string): Promise<string> => {
   const user = await prisma.user.findUnique({ where: { email } });

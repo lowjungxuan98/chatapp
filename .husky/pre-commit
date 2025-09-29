@@ -1,4 +1,6 @@
-npm install -g npm-check-updates
-ncu -u
-npm install
-npm run build
+#!/usr/bin/env sh
+# . "$(dirname -- "$0")/_/husky.sh"
+# npm install -g npm-check-updates
+# ncu -u
+# npm install
+# npm run build

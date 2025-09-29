@@ -1,7 +1,5 @@
-export { default as Login } from './Login';
-export { default as Register } from './Register';
-export { default as ForgotPassword } from './ForgotPassword';
-export { default as ResetPassword } from './ResetPassword';
-export { default as Dashboard } from './Dashboard';
-export { default as RemoteControl } from './RemoteControl';
-export { default as Chat } from './Chat';
+export { default as Login } from '@/components/pages/Login';
+export { default as Register } from '@/components/pages/Register';
+export { default as ForgotPassword } from '@/components/pages/ForgotPassword';
+export { default as ResetPassword } from '@/components/pages/ResetPassword';
+export { default as Friends } from '@/components/pages/Friends';

@@ -12,7 +12,10 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(async () => {
   const httpServer = createServer(handler);
+  
+  // Initialize Socket.IO server
   await server(httpServer);
+  
   httpServer
     .once("error", (err) => {
       logger.error("HTTP server error", err);

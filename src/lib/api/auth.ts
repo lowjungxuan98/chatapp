@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { BaseApiManager } from './base';
+import { BaseApiManager } from '@/lib/api/base';
 import {
   ApiResponse,
   LoginData,

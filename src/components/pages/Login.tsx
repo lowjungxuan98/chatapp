@@ -3,27 +3,30 @@
 import { signIn } from "next-auth/react"
 import AuthCard from '@/components/my-ui/AuthCard';
 import { FormConfig, loginSchema, LoginData } from '@/types';
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { api } from "@/lib/api";
+import { useTranslations } from 'next-intl';
 
 export default function Login() {
   const router = useRouter();
+  const { locale } = useParams();
+  const t = useTranslations('Auth');
 
   const loginConfig: FormConfig<LoginData> = {
     fields: [
       {
         name: 'email',
-        label: 'Email Address',
+        label: t('fields.email.label'),
         type: 'email',
-        placeholder: 'Enter your email',
+        placeholder: t('fields.email.placeholder'),
         required: true,
         autoComplete: 'email',
       },
       {
         name: 'password',
-        label: 'Password',
+        label: t('fields.password.label'),
         type: 'password',
-        placeholder: 'Enter your password',
+        placeholder: t('fields.password.placeholder'),
         required: true,
         autoComplete: 'current-password',
       },
@@ -40,29 +43,29 @@ export default function Login() {
           redirect: false
         }).then((res) => {
           if (!res.error)
-            router.push("/");
+            router.push(`/${locale}`);
         })
       }
     },
-    submitButtonText: 'Sign In',
+    submitButtonText: t('login.submitButton'),
     resetOnSubmit: false,
   };
   return (
     <AuthCard
-      title="Sign In"
-      subtitle="Welcome back! Please sign in to your account."
+      title={t('login.title')}
+      subtitle={t('login.subtitle')}
       config={loginConfig}
       footer={
         <div className="space-y-2">
           <div className="text-center">
-            <a href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500 font-medium">
-              Forgot your password?
+            <a href={`/${locale}/forgot-password`} className="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              {t('links.forgotPassword')}
             </a>
           </div>
           <div className="text-center">
-            Don&apos;t have an account?{' '}
-            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+            {t('links.dontHaveAccount')}{' '}
+            <a href={`/${locale}/register`} className="font-medium text-blue-600 hover:text-blue-500">
+              {t('links.signUp')}
             </a>
           </div>
         </div>

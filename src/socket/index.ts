@@ -1,1 +1,2 @@
-export { server } from "./server";
+export * from '@/socket/client/index';
+export * from '@/socket/server/index';

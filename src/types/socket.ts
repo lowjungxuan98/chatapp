@@ -1,38 +1,38 @@
-// ============================================================================
-// Socket.IO Event Interfaces
-// ============================================================================
+import type {
+  S2CFriendEvents,
+  C2SFriendEvents,
+} from '@/types';
+import { Server as SocketIOServer } from 'socket.io';
 
-export interface ChatMessage {
-  id: string;
-  content: string;
-  username: string;
-  timestamp: string;
-  socketId: string;
-}
+export interface ServerToClientEvents 
+  extends S2CFriendEvents {}
 
-export interface ServerToClient {
-  remote: (data: { message: string }) => void;
-  remotechannel: (roomName: string) => void;
-  joinRemote: (roomName: string) => void;
-  tap: (data: {x: number, y: number}) => void;
-}
+export interface ClientToServerEvents 
+  extends C2SFriendEvents {}
 
-export interface ClientToServer {
-  remote: () => void;
-  remotechannel: (roomName: string) => void;
-  joinRemote: (roomName: string) => void;
-  tap: (data: {x: number, y: number}) => void;
-}
-
-  export interface InterServer {
-  // Cross-server events (if using Redis adapter)
-  // Add any inter-server communication events here
-  [key: string]: unknown;
+export interface InterServerEvents {
+  ping: () => void;
 }
 
 export interface SocketData {
-  // Per-socket metadata
   username?: string;
   userId?: string;
-  rooms?: string[];
+  sessionId?: string;
+  authenticated?: boolean;
+}
+
+export type ServerToClient = ServerToClientEvents;
+export type ClientToServer = ClientToServerEvents;
+export type InterServer = InterServerEvents;
+
+// Global Socket.IO instance storage (stored in global namespace)
+export function setSocketIO(
+  io: SocketIOServer<ClientToServer, ServerToClient, InterServer, SocketData>
+): void {
+  global.socketIO = io;
+}
+
+export function getSocketIO(): 
+  SocketIOServer<ClientToServer, ServerToClient, InterServer, SocketData> | undefined {
+  return global.socketIO;
 }

@@ -4,11 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { 
-  MessageSquare, 
-  Home,
-  Monitor,
+  Users,
   LogOut,
-  Wifi
 } from 'lucide-react';
 import {
   Sidebar,
@@ -25,10 +22,7 @@ import {
 import pkg from '../../../package.json';
 
 const navItems = [
-  { title: 'Dashboard', url: '/dashboard', icon: Home },
-  { title: 'Remote Control', url: '/remote-control', icon: Monitor },
-  { title: 'Socket', url: '/socket', icon: Wifi },
-  { title: 'Chat', url: '/chat', icon: MessageSquare },
+  { title: 'Friends', url: '/friends', icon: Users },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -44,9 +38,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/dashboard">
+              <Link href="/friends">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <MessageSquare className="size-4" />
+                  <Users className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{pkg.name}</span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from './Form';
+import { Form } from '@/components/my-ui/Form';
 import { FormConfig } from '@/types';
 import {
   Card,

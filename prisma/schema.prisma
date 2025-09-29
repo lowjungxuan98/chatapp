@@ -8,10 +8,11 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-/**
- * Auth.js Prisma adapter core models + a password field for credentials login.
- * The @@map/@map follow the official adapter's suggested mapping for Postgres tables.
- */
+enum FriendStatus {
+  ACCEPTED
+  DECLINED
+  PENDING
+}
 
 model Account {
   id                String  @id @default(cuid())
@@ -32,6 +33,37 @@ model Account {
   @@map("accounts")
 }
 
+model BlockRelation {
+  id        String   @id @default(cuid())
+  blockerId String   @map("blocker_id")
+  blockedId String   @map("blocked_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  blocker   User     @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@unique([blockerId, blockedId])
+  @@index([blockerId])
+  @@index([blockedId])
+  @@map("block_relations")
+}
+
+model FriendRelation {
+  id        String       @id @default(cuid())
+  userId    String       @map("user_id")
+  friendId  String       @map("friend_id")
+  status    FriendStatus @default(PENDING)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  user      User         @relation("SentRequests", fields: [userId], references: [id], onDelete: Cascade)
+  friend    User         @relation("ReceivedRequests", fields: [friendId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, friendId])
+  @@index([userId, status])
+  @@index([friendId, status])
+  @@index([userId, friendId, status])
+  @@map("friend_relations")
+}
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
@@ -43,14 +75,18 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  password      String?   @db.Text
-  accounts      Account[]
-  sessions      Session[]
+  id                     String           @id @default(cuid())
+  name                   String?
+  email                  String?          @unique
+  emailVerified          DateTime?        @map("email_verified")
+  image                  String?
+  password               String?          @db.Text
+  accounts               Account[]
+  sessions               Session[]
+  sentFriendRequests     FriendRelation[] @relation("SentRequests")
+  receivedFriendRequests FriendRelation[] @relation("ReceivedRequests")
+  blockedUsers           BlockRelation[]  @relation("Blocker")
+  blockedByUsers         BlockRelation[]  @relation("Blocked")
 
   @@map("users")
 }

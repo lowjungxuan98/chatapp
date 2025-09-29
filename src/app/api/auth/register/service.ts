@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/config/prisma';
 import { encrypt } from '@/lib/crypto';
-
-const prisma = new PrismaClient();
 
 export const signUp = async (data: { email: string; name: string; password: string }) => {
   const existingUser = await prisma.user.findFirst({ where: { email: data.email } });

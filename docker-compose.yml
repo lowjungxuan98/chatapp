@@ -1,11 +1,10 @@
-version: "3.8"
 
 services:
   postgres:
     image: postgres:alpine
-    container_name: chatapp-postgres
+    container_name: chat-app-postgres
     environment:
-      POSTGRES_DB: chatapp
+      POSTGRES_DB: chat-app
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -13,33 +12,33 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - chatapp-network
+      - chat-app-network
     restart: unless-stopped
 
   redis:
     image: redis:alpine
-    container_name: chatapp-redis
+    container_name: chat-app-redis
     command: ["redis-server", "--appendonly", "yes"]
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
     networks:
-      - chatapp-network
+      - chat-app-network
     restart: unless-stopped
 
-  # chatapp:
+  # chat-app:
   #   build: 
   #     context: .
   #     platforms: 
   #       - linux/arm64
-  #   container_name: chatapp-app
+  #   container_name: chat-app-app
   #   env_file:
   #     - .env
   #   environment:
   #     - NODE_ENV=production
-  #     - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/chatapp?connect_timeout=15
-  #     - POSTGRES_URL_NON_POOLING=postgresql://postgres:postgres@postgres:5432/chatapp
+  #     - POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/chat-app?connect_timeout=15
+  #     - POSTGRES_URL_NON_POOLING=postgresql://postgres:postgres@postgres:5432/chat-app
   #     - REDIS_URL=redis://redis:6379
   #   ports:
   #     - "3000:3000"
@@ -47,7 +46,7 @@ services:
   #     - postgres
   #     - redis
   #   networks:
-  #     - chatapp-network
+  #     - chat-app-network
   #   restart: unless-stopped
 
 volumes:
@@ -55,5 +54,5 @@ volumes:
   redis_data:
 
 networks:
-  chatapp-network:
+  chat-app-network:
     driver: bridge

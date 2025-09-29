@@ -1,9 +1,5 @@
-// API Manager exports
-export { BaseApiManager } from './base';
-export { AuthApiManager, authApi } from './auth';
-
-// Re-export all types from centralized location
+export { BaseApiManager } from '@/lib/api/base';
+export { AuthApiManager, authApi } from '@/lib/api/auth';
+export { FriendsApiManager, friendsApi } from '@/lib/api/friends';
 export * from '@/types';
-
-// Re-export the singleton instance for easy access
-export { authApi as api } from './auth';
+export { authApi as api } from '@/lib/api/auth';

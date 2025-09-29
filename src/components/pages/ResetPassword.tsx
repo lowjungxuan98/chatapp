@@ -1,9 +1,10 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import AuthCard from '@/components/my-ui/AuthCard';
 import { api } from '@/lib/api';
 import { FormConfig, resetPasswordSchema, ResetPasswordData } from '@/types';
+import { useTranslations } from 'next-intl';
 
 interface ResetPasswordProps {
   token: string;
@@ -11,23 +12,25 @@ interface ResetPasswordProps {
 
 export default function ResetPassword({ token }: ResetPasswordProps) {
   const router = useRouter();
+  const { locale } = useParams();
+  const t = useTranslations('Auth');
 
   const resetPasswordConfig: FormConfig<ResetPasswordData> = {
     fields: [
       {
         name: 'password',
-        label: 'Password',
+        label: t('fields.newPassword.label'),
         type: 'password',
-        placeholder: 'Create a password',
+        placeholder: t('fields.newPassword.placeholder'),
         required: true,
         autoComplete: 'new-password',
-        description: 'Must contain at least 8 characters with uppercase, lowercase, and numbers',
+        description: t('fields.newPassword.description'),
       },
       {
         name: 'confirmPassword',
-        label: 'Confirm Password',
+        label: t('fields.confirmPassword.label'),
         type: 'password',
-        placeholder: 'Confirm your password',
+        placeholder: t('fields.confirmPassword.placeholder'),
         required: true,
         autoComplete: 'new-password',
       },
@@ -37,32 +40,32 @@ export default function ResetPassword({ token }: ResetPasswordProps) {
       try {
         const res = await api.resetPassword(token, data);
         if (res.success) {
-          router.push("/me");
+          router.push(`/${locale}/me`);
         }
       } catch (error) {
         console.error('Reset password error:', error);
       }
     },
-    submitButtonText: 'Reset Password',
+    submitButtonText: t('resetPassword.submitButton'),
     resetOnSubmit: true,
   };
 
   return (
     <AuthCard
-      title="Reset Password"
-      subtitle="Enter your new password below."
+      title={t('resetPassword.title')}
+      subtitle={t('resetPassword.subtitle')}
       config={resetPasswordConfig}
       footer={
         <div className="space-y-2">
           <div className="text-center">
-            <a href="/login" className="text-sm text-blue-600 hover:text-blue-500 font-medium">
-              Back to Sign In
+            <a href={`/${locale}/login`} className="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              {t('links.backToSignIn')}
             </a>
           </div>
           <div className="text-center">
-            Don&apos;t have an account?{' '}
-            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+            {t('links.dontHaveAccount')}{' '}
+            <a href={`/${locale}/register`} className="font-medium text-blue-600 hover:text-blue-500">
+              {t('links.signUp')}
             </a>
           </div>
         </div>

@@ -3,48 +3,53 @@
 import AuthCard from '@/components/my-ui/AuthCard';
 import { api } from '@/lib/api';
 import { FormConfig, forgotPasswordSchema, ForgotPasswordData } from '@/types';
-
-const forgotPasswordConfig: FormConfig<ForgotPasswordData> = {
-  fields: [
-    {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
-      placeholder: 'Enter your email address',
-      required: true,
-      autoComplete: 'email',
-      description: 'We\'ll send you a link to reset your password',
-    },
-  ],
-  schema: forgotPasswordSchema,
-  onSubmit: async (data) => {
-    try {
-      await api.forgotPassword(data);
-    } catch (error) {
-      console.error('Forgot password error:', error);
-    }
-  },
-  submitButtonText: 'Send Reset Link',
-  resetOnSubmit: true,
-};
+import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function ForgotPassword() {
+  const { locale } = useParams();
+  const t = useTranslations('Auth');
+
+  const forgotPasswordConfig: FormConfig<ForgotPasswordData> = {
+    fields: [
+      {
+        name: 'email',
+        label: t('fields.emailReset.label'),
+        type: 'email',
+        placeholder: t('fields.emailReset.placeholder'),
+        required: true,
+        autoComplete: 'email',
+        description: t('fields.emailReset.description'),
+      },
+    ],
+    schema: forgotPasswordSchema,
+    onSubmit: async (data) => {
+      try {
+        await api.forgotPassword(data);
+      } catch (error) {
+        console.error('Forgot password error:', error);
+      }
+    },
+    submitButtonText: t('forgotPassword.submitButton'),
+    resetOnSubmit: true,
+  };
+
   return (
     <AuthCard 
-      title="Reset Password"
-      subtitle="Enter your email address and we'll send you a link to reset your password."
+      title={t('forgotPassword.title')}
+      subtitle={t('forgotPassword.subtitle')}
       config={forgotPasswordConfig}
       footer={
         <div className="space-y-2">
           <div className="text-center">
-            <a href="/login" className="text-sm text-blue-600 hover:text-blue-500 font-medium">
-              Back to Sign In
+            <a href={`/${locale}/login`} className="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              {t('links.backToSignIn')}
             </a>
           </div>
           <div className="text-center">
-            Don&apos;t have an account?{' '}
-            <a href="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              Sign up
+            {t('links.dontHaveAccount')}{' '}
+            <a href={`/${locale}/register`} className="font-medium text-blue-600 hover:text-blue-500">
+              {t('links.signUp')}
             </a>
           </div>
         </div>

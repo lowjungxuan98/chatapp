@@ -1,59 +1,113 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import type { IOSocket } from "@/socket/client";
-import { client } from "@/socket/client";
+import React, { createContext, useContext, useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
+import { client } from "@/socket/client/config";
+import { Socket } from "socket.io-client";
+import { ClientToServer, ServerToClient } from "@/types/socket";
 
-const SocketContext = createContext<IOSocket | null>(null);
+interface SocketContextType {
+  socket: Socket<ServerToClient, ClientToServer> | null;
+  isConnected: boolean;
+  error: string | null;
+}
+
+const SocketContext = createContext<SocketContextType>({
+  socket: null,
+  isConnected: false,
+  error: null,
+});
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const [socket, setSocket] = useState<IOSocket | null>(null);
+  const [socket, setSocket] = useState<Socket<ServerToClient, ClientToServer> | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { data: session, status } = useSession();
+  const socketRef = useRef<Socket<ServerToClient, ClientToServer> | null>(null);
 
   useEffect(() => {
-    if (status !== "authenticated") {
-      setSocket((prev) => {
-        prev?.close();
-        return null;
-      });
+    // Only connect if user is authenticated
+    if (status === "loading") return;
+    
+    if (status === "unauthenticated") {
+      // Clean up existing socket if user is not authenticated
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+      setSocket(null);
+      setIsConnected(false);
+      setError(null);
       return;
     }
-    const s = client();
-    if (s) {
-      if (session?.user) {
-        s.auth = {
-          username: session?.user?.name,
-          userId: session?.user?.id,
-        };
+
+    // Don't create a new socket if one already exists and is connected
+    if (socketRef.current?.connected) return;
+
+    // Create socket connection with session data
+    const socketClient = client(
+      undefined, // use default URL
+      undefined, // use default options
+      {
+        userId: session?.user?.id || 'anonymous',
+        username: session?.user?.name || session?.user?.email || 'Anonymous User',
       }
-      
-      const onConnect = () => {
-        setSocket(s);
-      };
-      
-      const onDisconnect = () => {
-        setSocket(null);
-      };
+    );
+    socketRef.current = socketClient;
+    setSocket(socketClient);
 
-      s.on("connect", onConnect);
-      s.on("disconnect", onDisconnect);
-      s.connect();
+    // Connection event handlers
+    socketClient.on("connect", () => {
+      console.log("Socket connected:", socketClient.id);
+      setIsConnected(true);
+      setError(null);
+    });
 
-      return () => {
-        s.off("connect", onConnect);
-        s.off("disconnect", onDisconnect);
-        s.close();
-        setSocket(null);
-      };
-    }
-  }, [status, session?.user]);
+    socketClient.on("disconnect", (reason) => {
+      console.log("Socket disconnected:", reason);
+      setIsConnected(false);
+    });
+
+    socketClient.on("connect_error", (err) => {
+      console.error("Socket connection error:", err);
+      setError(err.message);
+      setIsConnected(false);
+    });
+
+    // Cleanup on unmount
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+      setSocket(null);
+      setIsConnected(false);
+      setError(null);
+    };
+  }, [session, status]);
 
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={{ socket, isConnected, error }}>
+      {children}
+    </SocketContext.Provider>
   );
 }
 
 export function useSocket() {
-  return useContext(SocketContext);
+  const context = useContext(SocketContext);
+  if (context === undefined) {
+    throw new Error("useSocket must be used within a SocketProvider");
+  }
+  return context.socket;
+}
+
+export function useSocketStatus() {
+  const context = useContext(SocketContext);
+  if (context === undefined) {
+    throw new Error("useSocketStatus must be used within a SocketProvider");
+  }
+  return {
+    isConnected: context.isConnected,
+    error: context.error,
+  };
 }

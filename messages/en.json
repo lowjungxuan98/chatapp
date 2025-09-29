@@ -1,0 +1,269 @@
+{
+  "HomePage": {
+    "title": "Welcome to Chat App",
+    "description": "Real-time messaging application"
+  },
+  "Auth": {
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back! Please sign in to your account.",
+      "submitButton": "Sign In"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join us today! Create your account to get started.",
+      "submitButton": "Create Account"
+    },
+    "forgotPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+      "submitButton": "Send Reset Link"
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password below.",
+      "submitButton": "Reset Password"
+    },
+    "fields": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "Enter your email"
+      },
+      "emailReset": {
+        "label": "Email Address",
+        "placeholder": "Enter your email address",
+        "description": "We'll send you a link to reset your password"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "newPassword": {
+        "label": "Password",
+        "placeholder": "Create a password",
+        "description": "Must contain at least 8 characters with uppercase, lowercase, and numbers"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Confirm your password"
+      }
+    },
+    "links": {
+      "alreadyHaveAccount": "Already have an account?",
+      "dontHaveAccount": "Don't have an account?",
+      "forgotPassword": "Forgot your password?",
+      "backToSignIn": "Back to Sign In",
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    }
+  },
+  "Dashboard": {
+    "welcome": "Welcome back, {name}!",
+    "friends": "Friends",
+    "messages": "Messages",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "Friends": {
+    "title": "Friends",
+    "pageTitle": "Contact Management",
+    "pageDescription": "Manage your friends, pending requests, and blocked list",
+    "addFriend": "Add Friend",
+    "friendRequests": "Friend Requests",
+    "pendingRequests": "Pending Requests",
+    "blockList": "Blocked Users",
+    "searchUsers": "Search Users",
+    "noFriends": "No friends yet",
+    "accept": "Accept",
+    "reject": "Reject",
+    "remove": "Remove",
+    "block": "Block",
+    "unblock": "Unblock",
+    "cancel": "Cancel",
+    "online": "Online",
+    "offline": "Offline",
+    "currentlyOnline": "Currently online",
+    "tabs": {
+      "friends": {
+        "label": "Friends List",
+        "shortLabel": "Friends",
+        "title": "My Friends",
+        "description": "View and manage your friends list"
+      },
+      "pending": {
+        "label": "Pending",
+        "shortLabel": "Pending",
+        "title": "Pending Requests",
+        "description": "View received friend requests and sent requests"
+      },
+      "blocked": {
+        "label": "Blocked",
+        "shortLabel": "Blocked",
+        "title": "Blocked List",
+        "description": "Manage your blocked users list"
+      },
+      "search": {
+        "label": "Search Users",
+        "shortLabel": "Search",
+        "title": "Search Users",
+        "description": "Search and add new friends by username or email"
+      }
+    },
+    "list": {
+      "totalFriends": "friends",
+      "totalUsers": "users",
+      "totalRequests": "requests",
+      "shown": "shown",
+      "refresh": "Refresh",
+      "loadMore": "Load More",
+      "loading": "Loading...",
+      "allShown": "All displayed"
+    },
+    "empty": {
+      "noFriends": "No friends yet",
+      "noFriendsDesc": "You haven't added any friends yet. Search for users to add new friends!",
+      "noBlockList": "Block list is empty",
+      "noBlockListDesc": "You haven't blocked any users",
+      "noReceivedRequests": "No received requests",
+      "noReceivedRequestsDesc": "You have no pending friend requests",
+      "noSentRequests": "No sent requests",
+      "noSentRequestsDesc": "You haven't sent any friend requests yet",
+      "startSearching": "Start searching",
+      "startSearchingDesc": "Enter {type} above to start searching for new friends",
+      "noResults": "No results found",
+      "noResultsDesc": "No users found matching \"{query}\". Try a different keyword"
+    },
+    "actions": {
+      "sendMessage": "Send Message",
+      "sendRequest": "Add Friend",
+      "requestPending": "Pending",
+      "moreActions": "More actions",
+      "removeFriend": "Remove Friend",
+      "blockUser": "Block User",
+      "unblockUser": "Unblock",
+      "acceptRequest": "Accept",
+      "declineRequest": "Decline",
+      "cancelRequest": "Cancel Request",
+      "addFriend": "Add Friend",
+      "withdrawRequest": "Withdraw",
+      "featureInDevelopment": "Feature in development"
+    },
+    "status": {
+      "alreadyFriends": "Already friends",
+      "pendingResponse": "Pending response",
+      "blocked": "Blocked",
+      "cannotAdd": "Cannot add",
+      "unknownUser": "Unknown user"
+    },
+    "dialogs": {
+      "confirmRemoveFriend": "Confirm remove friend?",
+      "confirmRemoveFriendDesc": "Are you sure you want to remove {name} from your friends list? This action cannot be undone.",
+      "confirmBlockUser": "Confirm block user?",
+      "confirmBlockUserDesc": "Are you sure you want to block {name}? After blocking, this user will not be able to send you messages or friend requests.",
+      "processing": "Processing...",
+      "confirmAction": "Confirm"
+    },
+    "toast": {
+      "sendRequestSuccess": "Friend request sent",
+      "sendRequestSuccessDesc": "Sent friend request to {name}",
+      "sendRequestError": "Failed to send request",
+      "sendRequestErrorDesc": "Please try again later",
+      "unblockSuccess": "Unblocked successfully",
+      "unblockSuccessDesc": "Removed {name} from block list",
+      "unblockError": "Failed to unblock",
+      "unblockErrorDesc": "Please check your network connection",
+      "removeFriendSuccess": "Friend removed",
+      "removeFriendSuccessDesc": "Removed {name} from friends list",
+      "removeFriendError": "Failed to remove friend",
+      "removeFriendErrorDesc": "Please try again later",
+      "blockUserSuccess": "User blocked",
+      "blockUserSuccessDesc": "Added {name} to block list",
+      "blockUserError": "Failed to block user",
+      "blockUserErrorDesc": "Please try again later",
+      "requestAccepted": "Friend request accepted",
+      "requestAcceptedDesc": "You and {name} are now friends",
+      "acceptError": "Failed to accept request",
+      "requestDeclined": "Friend request declined",
+      "requestDeclinedDesc": "Declined friend request from {name}",
+      "declineError": "Failed to decline request",
+      "requestCancelled": "Friend request cancelled",
+      "requestCancelledDesc": "Cancelled friend request to {name}",
+      "cancelError": "Failed to cancel request",
+      "requestSent": "Friend request sent",
+      "requestSentDesc": "Sent friend request to {name}",
+      "sendError": "Failed to send request",
+      "networkError": "Network error",
+      "goToPendingPage": "Please go to pending requests page to withdraw"
+    },
+    "search": {
+      "searchByName": "Username",
+      "searchByEmail": "Email",
+      "placeholder": "Search friends...",
+      "found": "Found",
+      "users": "users",
+      "results": "search results",
+      "noResults": "No results found",
+      "clear": "Clear"
+    },
+    "timeAgo": {
+      "justNow": "Just now",
+      "minutesAgo": "{count} minutes ago",
+      "hoursAgo": "{count} hours ago",
+      "daysAgo": "{count} days ago",
+      "weeksAgo": "{count} weeks ago",
+      "monthsAgo": "{count} months ago",
+      "yearsAgo": "{count} years ago"
+    },
+    "pendingTabs": {
+      "received": "Received Requests",
+      "sent": "Sent Requests"
+    }
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "viewAll": "View all notifications",
+    "noNotifications": "No notifications",
+    "types": {
+      "friendRequest": "New Friend Request",
+      "message": "Message Received",
+      "groupInvite": "Group Invitation",
+      "systemUpdate": "System Update",
+      "profileView": "Profile Viewed"
+    },
+    "messages": {
+      "friendRequest": "{name} sent you a friend request",
+      "message": "You have a new message from {name}",
+      "groupInvite": "You were added to \"{group}\"",
+      "systemUpdate": "New features are now available",
+      "profileView": "Someone viewed your profile"
+    }
+  },
+  "Common": {
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "submit": "Submit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back"
+  },
+  "Errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "passwordMismatch": "Passwords do not match",
+    "minLength": "Must be at least {min} characters",
+    "maxLength": "Must be at most {max} characters",
+    "somethingWentWrong": "Something went wrong"
+  }
+}
+

@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
-import { ApiResponse, Handler, RequestSchema } from "@/types";
+import { ApiResponse, Handler, RequestSchema, RouteContext } from "@/types";
+import { auth } from '@/lib/config/next.auth';
 
-export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(handler: Handler<T>): Handler<T> => async (req: NextRequest) => {
+export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(handler: Handler<T>): Handler<T> => async (req: NextRequest, context?: RouteContext) => {
     const whitelistedPaths = [
         "/api/auth/login",
         "/api/auth/register",
@@ -34,27 +35,31 @@ export const GlobalMiddleware = <S extends RequestSchema>(schema: S) => <T>(hand
         );
     }
 
-    if (whitelistedPaths.includes(req.nextUrl.pathname)) {
-        return handler(req);
+    const params = await context?.params;
+    const parsedParams = schema.shape.params.safeParse(params);
+    if (!parsedParams.success && params) {
+        return NextResponse.json<ApiResponse<T>>(
+            { success: false, message: "Invalid request params", error: new Error("Invalid request params") },
+            { status: 400 }
+        );
     }
 
-    const authHeader = req.headers.get("authorization");
-    if (!authHeader?.startsWith("Bearer ")) {
+    if (whitelistedPaths.includes(req.nextUrl.pathname)) {
+        return handler(req, context);
+    }
+
+    // const authHeader = req.headers.get("authorization");
+    const session = await auth();
+    req.user = session?.user;
+    if (!session) {
         return NextResponse.json<ApiResponse<T>>(
-            { success: false, message: "Missing or invalid authorization header", error: new Error("Missing or invalid authorization header") },
+            { success: false, message: "Unauthorized", error: new Error("Unauthorized") },
             { status: 401 }
         );
     }
 
     try {
-        // const token = authHeader.split(" ")[1];
-        // const user = await verify(token, TokenType.ACCESS).then((res) => {
-        //     if (!res.user) throw new Error("Invalid or expired token");
-        //     return res.user;
-        // });
-
-        // req.user = user;
-        return handler(req);
+        return handler(req, context);
     } catch (error) {
         return NextResponse.json<ApiResponse<T>>(
             { success: false, message: "Invalid or expired token", error: error instanceof Error ? new Error(error.message) : new Error("Invalid or expired token") },

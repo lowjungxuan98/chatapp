@@ -12,6 +12,10 @@
     },
     "docs-tailwindcss": {
       "url": "https://gitmcp.io/tailwindlabs/tailwindcss"
+    },
+    "spec-workflow": {
+      "command": "npx",
+      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/Users/lowjungxuan/Desktop/chatapp"]
     }
   }
 }
